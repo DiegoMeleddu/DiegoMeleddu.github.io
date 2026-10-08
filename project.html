@@ -1,0 +1,125 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Project — Diego Meleddu</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="container">
+    <a href="index.html" class="logo"><span class="logo-mark">DM</span>Diego Meleddu</a>
+    <button class="menu-btn" aria-label="Open menu">☰</button>
+    <ul class="nav-links">
+      <li><a href="index.html#projects">Projects</a></li>
+      <li><a href="index.html#wip">In Development</a></li>
+      <li><a href="index.html#skills">Skills</a></li>
+      <li><a href="index.html#about">About</a></li>
+      <li><a href="index.html#contact">Contact</a></li>
+      <li><a data-cv class="nav-cv">CV ↓</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main id="project"></main>
+
+<footer>
+  <div class="container mono">© <span data-year></span> Diego Meleddu · Gameplay Programmer</div>
+</footer>
+
+<script src="data.js"></script>
+<script src="app.js"></script>
+<script>
+  const root = document.getElementById("project");
+  const idx = PROJECTS.findIndex(p => p.id === new URLSearchParams(location.search).get("id"));
+
+  if (idx === -1) {
+    root.innerHTML = `
+      <section class="container notfound">
+        <span class="section-index mono">404 // PROJECT NOT FOUND</span>
+        <h1>Lost in the level.</h1>
+        <p>This project doesn't exist (yet).</p>
+        <a href="index.html#projects" class="btn btn-primary">Back to projects</a>
+      </section>`;
+  } else {
+    const p = PROJECTS[idx];
+    const prev = PROJECTS[(idx - 1 + PROJECTS.length) % PROJECTS.length];
+    const next = PROJECTS[(idx + 1) % PROJECTS.length];
+    document.title = `${p.title} — ${SITE.name}`;
+
+    let n = 0;
+    const block = (title, content) => `
+      <div class="block reveal">
+        <span class="block-index mono">${String(++n).padStart(2, "0")} // ${title.toUpperCase()}</span>
+        <h2>${title}</h2>
+        ${content}
+      </div>`;
+    const list = items => `<ul class="built-list">${items.map(i => `<li>${i}</li>`).join("")}</ul>`;
+
+    const meta = [
+      ["Role", p.role], ["Engine", p.engine], ["Language", p.language], ["Team", p.team],
+      ["Duration", p.duration], ["Event", p.event], ["Platform", p.platform], ["Status", p.status]
+    ].filter(([, v]) => v);
+
+    const links = p.links || {};
+    const actions = [
+      links.itch && `<a class="btn btn-primary" href="${links.itch}" target="_blank" rel="noopener">Play on itch.io ↗</a>`,
+      links.github && `<a class="btn btn-ghost" href="${links.github}" target="_blank" rel="noopener">Source on GitHub ↗</a>`,
+      links.youtube && `<a class="btn btn-ghost" href="${links.youtube}" target="_blank" rel="noopener">Watch video ↗</a>`
+    ].filter(Boolean).join("");
+
+    root.innerHTML = `
+      <section class="project-top">
+        <div class="container">
+          <a href="index.html#${p.type === "wip" ? "wip" : "projects"}" class="back-link mono">← BACK TO PROJECTS</a>
+          <div class="project-header">
+            <span class="section-index mono">${p.type === "wip" ? "IN DEVELOPMENT" : "PROJECT"} // ${p.event || p.engine}</span>
+            <h1>${p.title}</h1>
+            <p class="project-lead">${p.summary}</p>
+            ${tagsHTML(p.tags)}
+            ${actions ? `<div class="btn-row">${actions}</div>` : ""}
+          </div>
+
+          <div class="project-media hud always">${mediaHTML(p, { controls: true })}</div>
+
+          <div class="project-layout">
+            <div class="project-main">
+              ${p.note ? `<div class="note">${p.note}</div>` : ""}
+              ${p.overview?.length ? block("Overview", p.overview.map(t => `<p>${t}</p>`).join("")) : ""}
+              ${p.built?.length ? block("What I built", list(p.built)) : ""}
+              ${p.extensions?.length ? block("Beyond the course", list(p.extensions)) : ""}
+              ${p.breakdown?.length ? block("Technical breakdown", `<div class="breakdown">${p.breakdown.map(b => `
+                <div class="breakdown-item"><h3>${b.title}</h3><p>${b.text}</p></div>`).join("")}</div>`) : ""}
+              ${p.gallery?.length ? block("Gallery", `<div class="gallery">${p.gallery.map(g => `
+                <figure><img src="${g.src}" alt="${g.caption || p.title}" loading="lazy">${g.caption ? `<figcaption>${g.caption}</figcaption>` : ""}</figure>`).join("")}</div>`) : ""}
+              ${p.code ? block("Code sample", `
+                <div class="code-block">
+                  <div class="code-head mono"><i></i><i></i><i></i>${p.code.title || ""}</div>
+                  <pre><code>${esc(p.code.snippet)}</code></pre>
+                </div>`) : ""}
+              ${p.learned ? block("What I learned", `<p>${p.learned}</p>`) : ""}
+            </div>
+            <aside class="meta-panel hud always">
+              <h4 class="mono">// PROJECT INFO</h4>
+              <dl>${meta.map(([k, v]) => `<dt>${k}</dt><dd>${v}</dd>`).join("")}</dl>
+            </aside>
+          </div>
+
+          <nav class="project-nav">
+            <a href="project.html?id=${prev.id}"><span>← PREVIOUS</span><strong>${prev.title}</strong></a>
+            <a href="project.html?id=${next.id}"><span>NEXT →</span><strong>${next.title}</strong></a>
+          </nav>
+        </div>
+      </section>`;
+  }
+
+  applySiteLinks();
+  initNav();
+  initReveal();
+</script>
+</body>
+</html>
