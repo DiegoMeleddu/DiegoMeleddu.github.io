@@ -9,7 +9,7 @@
 <meta property="og:description" content="Unreal Engine 5 · C++ · Blueprints — gameplay systems, AI and mechanics.">
 <meta property="og:image" content="assets/og-preview.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&family=Kalam&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -20,7 +20,7 @@
     <button class="menu-btn" aria-label="Open menu">☰</button>
     <ul class="nav-links">
       <li><a href="#projects">Projects</a></li>
-      <li><a href="#wip">In Development</a></li>
+      <li><a href="#wip">In progress</a></li>
       <li><a href="#skills">Skills</a></li>
       <li><a href="#about">About</a></li>
       <li><a href="#contact">Contact</a></li>
@@ -30,42 +30,51 @@
 </nav>
 
 <header class="hero" id="top">
-  <canvas id="heroCanvas"></canvas>
-  <div class="hero-grid"></div>
-  <div class="container hero-content">
-    <div class="status-chip mono"><span class="dot"></span>Open to work · Amsterdam / Remote</div>
-    <h1>Diego Meleddu<br><span class="grad-text">Gameplay Programmer</span></h1>
-    <p class="hero-lead">I build gameplay systems, AI and mechanics in <strong>Unreal Engine 5</strong> with <strong>C++</strong> and <strong>Blueprints</strong>.</p>
-    <div class="btn-row">
-      <a href="#projects" class="btn btn-primary">View projects</a>
-      <a data-cv class="btn btn-ghost">Download CV</a>
+  <div class="ruler" aria-hidden="true"></div>
+  <div class="container hero-inner">
+    <div class="hero-text">
+      <p class="eyebrow mono">Portfolio · <span data-year></span></p>
+      <h1>Diego Meleddu<span class="h1-role">Gameplay programmer.<br>Unreal Engine 5 &amp; C++.</span></h1>
+      <p class="hero-lead">I build gameplay systems, enemy AI and mechanics, and I like them readable, tunable and fun to play against.</p>
+      <div class="btn-row">
+        <a href="#projects" class="btn btn-primary">See the work</a>
+        <a data-cv class="btn btn-ghost">Download CV</a>
+      </div>
     </div>
-    <div class="hud-stats mono">
-      <div><span>ENGINE</span>Unreal Engine 5</div>
-      <div><span>LANGUAGE</span>C++ / Blueprints</div>
-      <div><span>SHIPPED</span><b id="statShipped">0</b> jam games</div>
-    </div>
+    <aside class="spec-card paper taped">
+      <span class="stamp">Open to work</span>
+      <p class="spec-title mono">SPEC SHEET / 001</p>
+      <dl class="spec-list">
+        <dt>Name</dt><dd>Diego Meleddu</dd>
+        <dt>Role</dt><dd>Gameplay Programmer</dd>
+        <dt>Engine</dt><dd>Unreal Engine 5</dd>
+        <dt>Language</dt><dd>C++ · Blueprints</dd>
+        <dt>Shipped</dt><dd><span id="statShipped">0</span> jam games</dd>
+        <dt>Based</dt><dd>Amsterdam · open to remote</dd>
+      </dl>
+      <p class="hand-note">currently building an action RPG in C++</p>
+    </aside>
   </div>
-  <a href="#projects" class="press-start mono">PRESS START ↓</a>
 </header>
 
 <section id="projects">
   <div class="container">
     <div class="section-head reveal">
-      <span class="section-index mono">01 // FEATURED WORK</span>
-      <h2>Featured Projects</h2>
-      <p>Shipped and playable games. Each project has a breakdown of what I built and how it works.</p>
+      <span class="label mono">01 — Featured work</span>
+      <h2>Things I've shipped</h2>
+      <p>Playable games with a breakdown of what I built and how it works.</p>
+      <span class="hand-note">↓ open a card for the full breakdown</span>
     </div>
     <div class="cards-grid" id="featuredGrid"></div>
   </div>
 </section>
 
-<section id="wip" class="alt">
+<section id="wip">
   <div class="container">
     <div class="section-head reveal">
-      <span class="section-index mono">02 // IN DEVELOPMENT</span>
-      <h2>Currently Building</h2>
-      <p>Unreal Engine 5 projects in progress, updated as they evolve.</p>
+      <span class="label mono">02 — On the workbench</span>
+      <h2>Work in progress</h2>
+      <p>Unreal Engine 5 projects I'm building right now, updated as they evolve.</p>
     </div>
     <div class="wip-list" id="wipList"></div>
   </div>
@@ -74,20 +83,20 @@
 <section id="jams">
   <div class="container">
     <div class="section-head reveal">
-      <span class="section-index mono">03 // GAME JAMS</span>
-      <h2>More Jam Games</h2>
-      <p>Small games shipped under tight deadlines: scope it, build it, ship it.</p>
+      <span class="label mono">03 — Game jams</span>
+      <h2>Small games, real deadlines</h2>
+      <p>Scope it, build it, ship it. A few more games made under jam constraints.</p>
     </div>
     <div class="jams-grid" id="jamsGrid"></div>
-    <a class="link-more mono" data-link="itch">ALL GAMES ON ITCH.IO →</a>
+    <a class="link-more mono" data-link="itch">All games on itch.io →</a>
   </div>
 </section>
 
-<section id="skills" class="alt">
+<section id="skills">
   <div class="container">
     <div class="section-head reveal">
-      <span class="section-index mono">04 // SKILLS</span>
-      <h2>Skills & Tools</h2>
+      <span class="label mono">04 — Toolbox</span>
+      <h2>Skills &amp; tools</h2>
       <p>Focused on gameplay programming in Unreal Engine, with a broader toolkit for prototyping and production.</p>
     </div>
     <div class="skills-grid" id="skillsGrid"></div>
@@ -97,13 +106,13 @@
 <section id="about">
   <div class="container">
     <div class="section-head reveal">
-      <span class="section-index mono">05 // ABOUT</span>
-      <h2>About Me</h2>
+      <span class="label mono">05 — About</span>
+      <h2>The person behind the code</h2>
     </div>
     <div class="about-grid">
       <div class="about-text reveal">
         <p>I'm <strong>Diego</strong>, a gameplay programmer focused on <strong>Unreal Engine 5 and C++</strong>.</p>
-        <p>I come from a <strong>Computer Science</strong> background and spent four years at <strong>Amazon Logistics</strong> as a Process Specialist and Data Analyst: auditing systems, finding where processes broke and fixing them with data. That mindset carries straight into game development — debugging, iterating and building systems that hold up under pressure.</p>
+        <p>I come from a <strong>Computer Science</strong> background and spent four years at <strong>Amazon Logistics</strong> as a Process Specialist and Data Analyst: auditing systems, finding where processes broke and fixing them with data. That mindset carries straight into game development: debugging, iterating and building systems that hold up under pressure.</p>
         <p>After the programming track at <strong>Event Horizon School of Game Development</strong>, I've been working as an independent developer since 2024: shipping game jam titles, building gameplay systems in C++ and Blueprints, and experimenting with AI, multiplayer and procedural mechanics.</p>
         <p>I'm looking for a role as a <strong>Gameplay Programmer</strong>, and I'm also open to Tools Developer positions.</p>
         <ul class="facts">
@@ -114,22 +123,22 @@
         <a data-cv class="btn btn-primary">Download CV</a>
       </div>
       <div class="reveal">
-        <h3 class="sub-title">Career & Education</h3>
+        <h3 class="sub-title">Career &amp; education</h3>
         <div class="timeline" id="timeline"></div>
       </div>
     </div>
     <div class="courses">
-      <h3 class="sub-title reveal">Training & Certifications</h3>
+      <h3 class="sub-title reveal">Training &amp; certifications</h3>
       <div class="courses-grid" id="coursesGrid"></div>
     </div>
   </div>
 </section>
 
-<section id="contact" class="alt">
+<section id="contact">
   <div class="container">
-    <div class="contact-box hud always reveal">
-      <span class="section-index mono">06 // CONTACT</span>
-      <h2>Let's build something <span class="grad-text">playable</span>.</h2>
+    <div class="contact-box paper taped reveal">
+      <span class="label mono">06 — Contact</span>
+      <h2>Let's build something playable.</h2>
       <p>Looking for a gameplay programmer for your team? I'm available for full-time roles in Amsterdam or remote.</p>
       <a data-email class="btn btn-primary"></a>
       <div class="social-row mono">
@@ -143,47 +152,49 @@
 </section>
 
 <footer>
-  <div class="container mono">© <span data-year></span> Diego Meleddu · Gameplay Programmer · Built from scratch with HTML, CSS & JS</div>
+  <div class="container mono">© <span data-year></span> Diego Meleddu · Built by hand, no templates</div>
 </footer>
 
 <script src="data.js"></script>
 <script src="app.js"></script>
 <script>
   const STATUS_LABEL = { completed: "Completed", progress: "In progress", planned: "Up next" };
+  const num = i => String(i + 1).padStart(2, "0");
 
   const cardHTML = (p, i) => `
-    <a class="card hud reveal" href="project.html?id=${p.id}">
-      <div class="card-media">${mediaHTML(p)}<span class="card-index mono">${String(i + 1).padStart(2, "0")}</span></div>
+    <a class="card paper taped reveal" href="project.html?id=${p.id}">
+      <div class="card-media">${mediaHTML(p)}</div>
       <div class="card-body">
-        <div class="card-meta mono"><span>${p.engine} · ${p.language}</span><span>${p.status}</span></div>
+        <div class="card-meta mono"><span>No. ${num(i)}</span><span>${p.status}</span></div>
         <h3>${p.title}</h3>
+        <p class="card-tech mono">${p.engine} · ${p.language}</p>
         <p>${p.summary}</p>
         ${tagsHTML(p.tags)}
-        <span class="card-cta mono">VIEW BREAKDOWN →</span>
+        <span class="card-cta">Read the breakdown →</span>
       </div>
     </a>`;
 
   const wipHTML = p => `
-    <a class="wip-item hud reveal" href="project.html?id=${p.id}">
+    <a class="wip-item paper taped reveal" href="project.html?id=${p.id}">
       <div class="wip-media">${mediaHTML(p)}</div>
       <div class="wip-body">
-        <span class="wip-badge mono"><span class="dot"></span>${p.status}</span>
+        <span class="stamp">${p.status}</span>
         <h3>${p.title}</h3>
+        <p class="card-tech mono">${p.engine} · ${p.language}</p>
         <p>${p.summary}</p>
-        <div class="card-meta mono"><span>${p.engine} · ${p.language}</span></div>
         ${tagsHTML(p.tags)}
-        <span class="card-cta mono">SEE PROGRESS →</span>
+        <span class="card-cta">See progress →</span>
       </div>
     </a>`;
 
-  const jamHTML = j => `
-    <a class="jam hud reveal" href="${j.link}" target="_blank" rel="noopener">
+  const jamHTML = (j, i) => `
+    <a class="jam paper reveal" href="${j.link}" target="_blank" rel="noopener">
       <div class="jam-media">${mediaHTML(j)}</div>
       <div class="jam-body">
-        <span class="mono">${j.event}</span>
+        <span class="jam-num mono">#${num(i)} · ${j.event}</span>
         <h4>${j.title}</h4>
         <p>${j.summary}</p>
-        <span class="jam-engine mono">${j.engine} · PLAY ↗</span>
+        <span class="jam-engine mono">${j.engine} · play ↗</span>
       </div>
     </a>`;
 
@@ -192,8 +203,8 @@
   document.getElementById("jamsGrid").innerHTML = JAMS.map(jamHTML).join("");
 
   document.getElementById("skillsGrid").innerHTML = SKILLS.map((s, i) => `
-    <div class="skill-group hud reveal">
-      <span class="skill-idx mono">0${i + 1}</span>
+    <div class="skill-group reveal">
+      <span class="skill-idx mono">${num(i)} /</span>
       <h3>${s.group}</h3>
       <p>${s.text}</p>
       ${tagsHTML(s.items)}
@@ -208,21 +219,20 @@
     </div>`).join("");
 
   document.getElementById("coursesGrid").innerHTML = COURSES.map(c => `
-    <div class="course hud reveal">
+    <div class="course reveal">
       <span class="pill pill-${c.status} mono">${STATUS_LABEL[c.status]}</span>
       <h4>${c.title}</h4>
       <span class="tl-org">${c.provider}</span>
       <p>${c.focus}</p>
     </div>`).join("");
 
-  const shipped = PROJECTS.filter(p => p.type === "featured" && p.status.startsWith("Released")).length + JAMS.length;
-  document.getElementById("statShipped").textContent = shipped;
+  document.getElementById("statShipped").textContent =
+    PROJECTS.filter(p => p.type === "featured" && p.status.startsWith("Released")).length + JAMS.length;
 
   applySiteLinks();
   initNav();
   initReveal();
   initHoverVideos();
-  initHeroCanvas(document.getElementById("heroCanvas"));
 </script>
 </body>
 </html>
