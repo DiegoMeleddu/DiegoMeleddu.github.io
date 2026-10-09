@@ -18,10 +18,10 @@ function makePlaceholder(label) {
 
 function mediaHTML(item, { controls = false } = {}) {
   if (item.video) {
-    return `<video src="${item.video}" ${item.cover ? `poster="${item.cover}"` : ""} muted loop playsinline preload="metadata" ${controls ? "controls autoplay" : ""}></video>`;
+    return `<video src="${item.video}" ${item.cover ? `poster="${item.cover}"` : ""} muted loop playsinline preload="metadata" ${controls ? "controls autoplay" : ""} onerror="console.warn('Video not found:', this.src)"></video>`;
   }
   if (item.cover) {
-    return `<img src="${item.cover}" alt="${item.title}" loading="lazy" onerror="this.replaceWith(makePlaceholder(this.alt))">`;
+    return `<img src="${item.cover}" alt="${item.title}" loading="lazy" onerror="console.warn('Image not found:', this.src); this.replaceWith(makePlaceholder(this.alt))">`;
   }
   return placeholderHTML(item.title);
 }

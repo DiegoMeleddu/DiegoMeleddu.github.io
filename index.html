@@ -19,10 +19,10 @@
     <a href="index.html" class="logo"><span class="logo-mark">DM</span>Diego Meleddu</a>
     <button class="menu-btn" aria-label="Open menu">☰</button>
     <ul class="nav-links">
-      <li><a href="#projects">Projects</a></li>
-      <li><a href="#wip">In progress</a></li>
-      <li><a href="#skills">Skills</a></li>
       <li><a href="#about">About</a></li>
+      <li><a href="#wip">In progress</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#skills">Skills</a></li>
       <li><a href="#contact">Contact</a></li>
       <li><a data-cv class="nav-cv">CV ↓</a></li>
     </ul>
@@ -49,7 +49,7 @@
         <dt>Role</dt><dd>Gameplay Programmer</dd>
         <dt>Engine</dt><dd>Unreal Engine 5</dd>
         <dt>Language</dt><dd>C++ · Blueprints</dd>
-        <dt>Shipped</dt><dd><span id="statShipped">0</span> jam games</dd>
+        <dt>Jam games</dt><dd><span id="statShipped">0</span> playable on itch.io</dd>
         <dt>Based</dt><dd>Amsterdam · open to remote</dd>
       </dl>
       <p class="hand-note">currently building an action RPG in C++</p>
@@ -57,63 +57,17 @@
   </div>
 </header>
 
-<section id="projects">
-  <div class="container">
-    <div class="section-head reveal">
-      <span class="label mono">01 — Featured work</span>
-      <h2>Things I've shipped</h2>
-      <p>Playable games with a breakdown of what I built and how it works.</p>
-      <span class="hand-note">↓ open a card for the full breakdown</span>
-    </div>
-    <div class="cards-grid" id="featuredGrid"></div>
-  </div>
-</section>
-
-<section id="wip">
-  <div class="container">
-    <div class="section-head reveal">
-      <span class="label mono">02 — On the workbench</span>
-      <h2>Work in progress</h2>
-      <p>Unreal Engine 5 projects I'm building right now, updated as they evolve.</p>
-    </div>
-    <div class="wip-list" id="wipList"></div>
-  </div>
-</section>
-
-<section id="jams">
-  <div class="container">
-    <div class="section-head reveal">
-      <span class="label mono">03 — Game jams</span>
-      <h2>Small games, real deadlines</h2>
-      <p>Scope it, build it, ship it. A few more games made under jam constraints.</p>
-    </div>
-    <div class="jams-grid" id="jamsGrid"></div>
-    <a class="link-more mono" data-link="itch">All games on itch.io →</a>
-  </div>
-</section>
-
-<section id="skills">
-  <div class="container">
-    <div class="section-head reveal">
-      <span class="label mono">04 — Toolbox</span>
-      <h2>Skills &amp; tools</h2>
-      <p>Focused on gameplay programming in Unreal Engine, with a broader toolkit for prototyping and production.</p>
-    </div>
-    <div class="skills-grid" id="skillsGrid"></div>
-  </div>
-</section>
-
 <section id="about">
   <div class="container">
     <div class="section-head reveal">
-      <span class="label mono">05 — About</span>
+      <span class="label mono">01 — About</span>
       <h2>The person behind the code</h2>
     </div>
     <div class="about-grid">
       <div class="about-text reveal">
         <p>I'm <strong>Diego</strong>, a gameplay programmer focused on <strong>Unreal Engine 5 and C++</strong>.</p>
         <p>I come from a <strong>Computer Science</strong> background and spent four years at <strong>Amazon Logistics</strong> as a Process Specialist and Data Analyst: auditing systems, finding where processes broke and fixing them with data. That mindset carries straight into game development: debugging, iterating and building systems that hold up under pressure.</p>
-        <p>After the programming track at <strong>Event Horizon School of Game Development</strong>, I've been working as an independent developer since 2024: shipping game jam titles, building gameplay systems in C++ and Blueprints, and experimenting with AI, multiplayer and procedural mechanics.</p>
+        <p>After the programming track at <strong>Event Horizon School of Game Development</strong>, I've been working as an independent developer since 2024: building gameplay systems in C++ and Blueprints, entering game jams and experimenting with AI, multiplayer and procedural mechanics.</p>
         <p>I'm looking for a role as a <strong>Gameplay Programmer</strong>, and I'm also open to Tools Developer positions.</p>
         <ul class="facts">
           <li><span>Location</span><span>Amsterdam · open to remote</span></li>
@@ -122,7 +76,7 @@
         </ul>
         <a data-cv class="btn btn-primary">Download CV</a>
       </div>
-      <div class="reveal">
+      <div class="cv-sheet paper taped reveal">
         <h3 class="sub-title">Career &amp; education</h3>
         <div class="timeline" id="timeline"></div>
       </div>
@@ -134,12 +88,59 @@
   </div>
 </section>
 
+<section id="wip">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="label mono">02 — On the workbench</span>
+      <h2>Work in progress</h2>
+      <p>Unreal Engine 5 projects I'm building right now, updated as they evolve.</p>
+      <span class="hand-note">↓ open a card to follow the progress</span>
+    </div>
+    <div class="wip-list" id="wipList"></div>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="label mono">03 — Finished work</span>
+      <h2>Things I've built</h2>
+      <p>Game jam entries and personal projects you can play, each with a breakdown of what I programmed and how it works.</p>
+      <span class="hand-note">↓ open a card for the full breakdown</span>
+    </div>
+    <div class="cards-grid" id="featuredGrid"></div>
+  </div>
+</section>
+
+<section id="jams">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="label mono">04 — Game jams</span>
+      <h2>Small games, real deadlines</h2>
+      <p>Scope it, build it, finish it. A few more games made under jam constraints.</p>
+    </div>
+    <div class="jams-grid" id="jamsGrid"></div>
+    <a class="link-more mono" data-link="itch">All games on itch.io →</a>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="label mono">05 — Toolbox</span>
+      <h2>Skills &amp; tools</h2>
+      <p>Focused on gameplay programming in Unreal Engine, with a broader toolkit for prototyping and production.</p>
+    </div>
+    <div class="skills-grid" id="skillsGrid"></div>
+  </div>
+</section>
+
 <section id="contact">
   <div class="container">
     <div class="contact-box paper taped reveal">
       <span class="label mono">06 — Contact</span>
-      <h2>Let's build something playable.</h2>
-      <p>Looking for a gameplay programmer for your team? I'm available for full-time roles in Amsterdam or remote.</p>
+      <h2>Need a gameplay programmer on your team?</h2>
+      <p>I'm looking for a full-time role in Amsterdam or remote. Drop me a line and I'll gladly walk you through any project, line by line.</p>
       <a data-email class="btn btn-primary"></a>
       <div class="social-row mono">
         <a data-link="linkedin">LinkedIn</a>
@@ -152,11 +153,12 @@
 </section>
 
 <footer>
-  <div class="container mono">© <span data-year></span> Diego Meleddu · Built by hand, no templates</div>
+  <div class="container mono">© <span data-year></span> Diego Meleddu · Gameplay Programmer</div>
 </footer>
 
 <script src="data.js"></script>
 <script src="app.js"></script>
+<script src="asset/extras.js"></script>
 <script>
   const STATUS_LABEL = { completed: "Completed", progress: "In progress", planned: "Up next" };
   const num = i => String(i + 1).padStart(2, "0");
@@ -203,8 +205,8 @@
   document.getElementById("jamsGrid").innerHTML = JAMS.map(jamHTML).join("");
 
   document.getElementById("skillsGrid").innerHTML = SKILLS.map((s, i) => `
-    <div class="skill-group reveal">
-      <span class="skill-idx mono">${num(i)} /</span>
+    <div class="skill-group paper reveal">
+      <span class="skill-tab mono">${num(i)}</span>
       <h3>${s.group}</h3>
       <p>${s.text}</p>
       ${tagsHTML(s.items)}
@@ -227,7 +229,7 @@
     </div>`).join("");
 
   document.getElementById("statShipped").textContent =
-    PROJECTS.filter(p => p.type === "featured" && p.status.startsWith("Released")).length + JAMS.length;
+    PROJECTS.filter(p => p.links && p.links.itch).length + JAMS.length;
 
   applySiteLinks();
   initNav();

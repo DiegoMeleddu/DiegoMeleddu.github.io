@@ -1,11 +1,11 @@
 /* =========================================================
-   DATA.JS — Edit this file to update the whole website.
+   DATA.JS â€” Edit this file to update the whole website.
    ========================================================= */
 
 const SITE = {
   name: "Diego Meleddu",
-  email: "your.email@example.com",               // TODO
-  cv: "assets/Diego_Meleddu_CV.pdf",              // TODO: add your PDF
+email: "meleddudiego@gmail.com",
+cv: "asset/Diego_Meleddu_CV.pdf",
   links: {
     linkedin: "https://www.linkedin.com/in/diego-meleddu-a3a4851b8/",
     github: "https://github.com/DiegoMeleddu",
@@ -24,11 +24,11 @@ const PROJECTS = [
     id: "rabbit-heist",
     type: "featured",
     title: "Rabbit Heist",
-    status: "Released",
+    status: "Jam build Â· Playable",
     event: "Mini Jam 181: Rabbits",
     engine: "Unreal Engine 5",
     language: "Blueprints",
-    role: "Solo Developer — Gameplay & AI",
+    role: "Solo Developer â€” Gameplay & AI",
     team: "Solo",
     duration: "Game jam",
     platform: "Windows",
@@ -49,7 +49,7 @@ const PROJECTS = [
       "Packaged and shipped a Windows build within the jam deadline."
     ],
     breakdown: [
-      { title: "AI state flow", text: "The Blackboard stores the target, last known location and alert state. Perception events update these keys, and the Behavior Tree switches between branches through decorators — so the AI logic stays modular and easy to tune." },
+      { title: "AI state flow", text: "The Blackboard stores the target, last known location and alert state. Perception events update these keys, and the Behavior Tree switches between branches through decorators â€” so the AI logic stays modular and easy to tune." },
       { title: "Detection & fairness", text: "When the farmer loses sight of the rabbit, it moves to the last known location and searches before giving up. This gives the player a window to escape and makes stealth feel fair rather than random." }
     ],
     learned: "Structuring AI with Behavior Trees instead of hard-coded logic, debugging AI live with the Gameplay Debugger, and scoping a complete game to fit a jam deadline.",
@@ -63,7 +63,7 @@ const PROJECTS = [
     event: "Brackeys Game Jam 2025.2",
     engine: "Unreal Engine 5",
     language: "Blueprints",
-    role: "Solo Developer — Gameplay & Enemy Systems",
+    role: "Solo Developer â€” Gameplay & Enemy Systems",
     team: "Solo",
     duration: "Game jam",
     platform: "Windows",
@@ -93,7 +93,7 @@ const PROJECTS = [
     id: "one-copper",
     type: "featured",
     title: "One Copper",
-    status: "Released · Updated",
+    status: "Jam build Â· Updated",
     event: "Brackeys Game Jam 2026.2",
     engine: "Godot",
     language: "GDScript",
@@ -107,7 +107,7 @@ const PROJECTS = [
     links: { itch: "https://alamorte.itch.io/one-chopper" },
     tags: ["Godot", "GDScript", "Card System", "UI", "Web"],
     overview: [
-      "A dragon is missing one copper coin. She doesn't care about the coin — she cares that someone thought she wouldn't notice. The player has to play cards to build a believable alibi and escape her wrath.",
+      "A dragon is missing one copper coin. She doesn't care about the coin â€” she cares that someone thought she wouldn't notice. The player has to play cards to build a believable alibi and escape her wrath.",
       "Built in Godot with GDScript to practise a different engine and a UI-heavy, systems-driven genre."
     ],
     built: [
@@ -118,7 +118,7 @@ const PROJECTS = [
       "Added an onboarding tutorial after player feedback pointed out the rules were unclear."
     ],
     breakdown: [
-      { title: "Iterating on feedback", text: "Early players liked the art but didn't understand the rules. I added a tutorial at the start of the game — a small but important lesson in onboarding and readability." }
+      { title: "Iterating on feedback", text: "Early players liked the art but didn't understand the rules. I added a tutorial at the start of the game â€” a small but important lesson in onboarding and readability." }
     ],
     learned: "Working outside Unreal, structuring a UI-heavy game in Godot's node/scene system, and responding to player feedback after release.",
     code: null
@@ -126,8 +126,8 @@ const PROJECTS = [
   {
     id: "maze-solitaire",
     type: "featured",
-    title: "Maze Solitaire",                       // TODO: real title
-    status: "Unreleased",
+    title: "Maze Solitaire",
+    status: "In polish",    
     event: "",
     engine: "Godot",
     language: "GDScript",
@@ -136,8 +136,13 @@ const PROJECTS = [
     duration: "",
     platform: "PC",
     summary: "Puzzle game blending solitaire with a shifting-tile labyrinth: the cards you play decide how the maze moves and where you can go.",
-    cover: "",
+    cover: "asset/maze-solitaire/cover.jpg",
     video: "",
+    gallery: [
+      { src: "asset/maze-solitaire/shot-1.jpg", caption: "Shifting a row of tiles" },
+      { src: "asset/maze-solitaire/shot-2.jpg", caption: "Card-driven turn" },
+      { src: "asset/maze-solitaire/shot-3.jpg", caption: "Valid paths highlighted after a shift" }
+    ],
     links: {},
     tags: ["Godot", "GDScript", "Grid Systems", "Puzzle"],
     overview: [
@@ -167,10 +172,10 @@ const PROJECTS = [
     duration: "Ongoing",
     platform: "PC",
     summary: "Third-person melee action RPG built in C++, based on Stephen Ulibarri's Unreal Engine 5 C++ course and extended with my own systems.",
-    cover: "",
+    cover: "asset/action-rpg/cover.jpg",
     video: "",
     links: {},
-    note: "Built while following Stephen Ulibarri's Unreal Engine 5 C++ course on Udemy. The \"Beyond the course\" section lists the features I designed and implemented on my own.",
+    note: "Built while following Stephen Ulibarri's Unreal Engine 5 C++ course on Udemy.",
     tags: ["UE5", "C++", "Combat", "Enemy AI", "Animation"],
     overview: [
       "A third-person action RPG with melee combat, enemies and an open environment. The core of the project is written in C++, with Blueprints used for content and tuning."
@@ -182,9 +187,6 @@ const PROJECTS = [
       "Attribute component for health and stamina, with HUD and health bars in UMG.",
       "Interactables: pickups, treasure and breakable props using Chaos physics."
     ],
-    extensions: [
-      "[TODO: add the features you build on your own — this is what recruiters look for]"
-    ],
     breakdown: [],
     learned: "",
     code: null
@@ -192,7 +194,7 @@ const PROJECTS = [
   {
     id: "ivy-growth",
     type: "wip",
-    title: "Ivy Growth — Puzzle Mechanic",
+    title: "Ivy Growth â€” Puzzle Mechanic",
     status: "Prototype",
     event: "",
     engine: "Unreal Engine 5",
@@ -202,10 +204,10 @@ const PROJECTS = [
     duration: "Ongoing",
     platform: "PC",
     summary: "Puzzle mechanic where the player steers a growing ivy across surfaces to reach goals and solve environmental puzzles.",
-    cover: "",
+    cover: "asset/ivy-growth/cover.jpg.jpg",
     video: "",
     links: {},
-    note: "Prototype in active development — this page is updated as the mechanic evolves.",
+    note: "Prototype in active development â€” this page is updated as the mechanic evolves.",
     tags: ["UE5", "Procedural", "Splines", "Puzzle Mechanic"],
     overview: [
       "Instead of controlling a character, the player controls the growth of an ivy plant. The ivy extends from its tip, climbs walls and wraps around objects, and the level becomes a puzzle about where and how to grow."
@@ -221,7 +223,7 @@ const PROJECTS = [
     code: null
     /* Example code sample:
     code: {
-      title: "IvyGrowthComponent.cpp — growth step",
+      title: "IvyGrowthComponent.cpp â€” growth step",
       lang: "cpp",
       snippet: `void UIvyGrowthComponent::Grow(float DeltaTime) { ... }`
     }
@@ -250,7 +252,7 @@ const JAMS = [
     link: "https://alamorte.itch.io/flight-invaders"
   },
   {
-    title: "SpamSchrödinger",
+    title: "SpamSchrÃ¶dinger",
     event: "Jame Gam #54",
     engine: "Unreal Engine",
     summary: "Button-mashing arcade game: spam the keys to keep the poison away from the box.",
@@ -290,35 +292,35 @@ const SKILLS = [
    --------------------------------------------------------- */
 const EXPERIENCE = [
   {
-    when: "Aug 2024 — Present",
+    when: "Aug 2024 â€” Present",
     title: "Independent Game Developer",
-    org: "Self-employed · Freelance",
+    org: "Self-employed Â· Freelance",
     text: "Developing gameplay systems in Unreal Engine 5 (C++ & Blueprints), shipping game jam titles and building personal projects focused on AI, combat and procedural mechanics."
   },
   {
-    when: "20XX — 20XX",                         // TODO
-    title: "Game Development — Programming Track",
+    when: "",
+    title: "Game Development â€” Programming Track",
     org: "Event Horizon School of Game Development",
     text: "Game programming fundamentals, C++ and engine workflows, team-based game projects."
   },
   {
-    when: "Jul 2019 — Jul 2023",
+    when: "Jul 2019 â€” Jul 2023",
     title: "Process Specialist & Data Analyst",
-    org: "Amazon Logistics · Torrazza Piemonte, Italy",
+    org: "Amazon Logistics Â· Torrazza Piemonte, Italy",
     text: "Quality control and audits using proprietary software, data analysis and process optimisation in a high-pressure, high-volume environment."
   },
   {
-    when: "20XX",                                // TODO
+    when: "",
     title: "Computer Science",
-    org: "[School / University]",                // TODO
+    org: "",
     text: "Background in programming, algorithms and software development."
   }
 ];
 
 /* status: "completed" | "progress" | "planned" */
 const COURSES = [
-  { title: "Unreal Engine 5 C++ Game Development", provider: "Udemy · Stephen Ulibarri", status: "completed", focus: "C++ gameplay, combat, enemy AI, animation and UI in UE5." },
-  { title: "Gameplay Ability System (GAS) in UE5", provider: "Udemy · Stephen Ulibarri", status: "progress", focus: "Abilities, attributes, gameplay effects and tags." },
-  { title: "Multiplayer in Unreal Engine 5 C++", provider: "Udemy · Stephen Ulibarri", status: "planned", focus: "Replication, RPCs, sessions and networked gameplay." },
-  { title: "C++ & Software Development", provider: "Udemy · Multiple certifications", status: "completed", focus: "Modern C++, OOP and software engineering practices." }
+  { title: "Unreal Engine 5 C++ Game Development", provider: "Udemy Â· Stephen Ulibarri", status: "completed", focus: "C++ gameplay, combat, enemy AI, animation and UI in UE5." },
+  { title: "Gameplay Ability System (GAS) in UE5", provider: "Udemy Â· Stephen Ulibarri", status: "progress", focus: "Abilities, attributes, gameplay effects and tags." },
+  { title: "Multiplayer in Unreal Engine 5 C++", provider: "Udemy Â· Stephen Ulibarri", status: "planned", focus: "Replication, RPCs, sessions and networked gameplay." },
+  { title: "C++ & Software Development", provider: "Udemy Â· Multiple certifications", status: "completed", focus: "Modern C++, OOP and software engineering practices." }
 ];
