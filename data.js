@@ -31,101 +31,101 @@ const PROJECTS = [
     role: "Solo Developer — Rendering / Tech Art",
     team: "Solo",
     duration: "Personal R&D",
-    platform: "PC · Deferred renderer + Lumen",
-    summary: "A portable two-pass post-process stack that turns a standard PBR scene into a hand-painted 3D look: banded colored light, brushwork and a Kuwahara paint filter. No per-object materials, no code plugins.",
+    platform: "PC",
+    summary: "A post-process effect that makes any 3D scene look hand-painted: shadows and light become colored bands, and surfaces break into brushstrokes.",
     cover: "asset/painterly-post-process/after.jpg",
     video: "",
     compare: {
       before: "asset/painterly-post-process/before.jpg",
       after: "asset/painterly-post-process/after.jpg",
       beforeLabel: "Default UE5 render",
-      afterLabel: "Painterly post-process"
+      afterLabel: "Painted Light"
     },
     gallery: [
-      { src: "asset/painterly-post-process/after.jpg", caption: "Final look: cool violet shadows, warm cream light, brushed edges" },
-      { src: "asset/painterly-post-process/before.jpg", caption: "Same scene with the default PBR render" },
-      { src: "asset/painterly-post-process/iteration.jpg", caption: "Earlier iteration: Kuwahara brushwork on an untinted pass" }
+      { src: "asset/painterly-post-process/after.jpg", caption: "Final look" },
+      { src: "asset/painterly-post-process/before.jpg", caption: "Same scene, default render" },
+      { src: "asset/painterly-post-process/iteration.jpg", caption: "Earlier iteration, brushwork only" }
     ],
     links: {},
-    tags: ["UE5.5", "Post-Process", "HLSL", "Kuwahara", "GBuffer", "Tech Art"],
+    tags: ["UE5.5", "Post-Process", "HLSL", "Tech Art"],
     overview: [
-      "The goal is the painted-3D style used in stylized animated series and games: 3D geometry and camera, but light and shadow treated like hand-painted 2D work. I broke the look down into four traits a shader can target — banded light, colored shadows, brushwork and a physical canvas medium — and built them as a global look layer for Unreal Engine 5.5.",
-      "Everything is a post-process, so it applies to every actor in the frame and travels between projects with a single Migrate. Art direction happens entirely through material instance parameters, with live viewport feedback and no recompiles."
+      "I wanted a 3D scene to read like a painting. Instead of repainting every material, I built the look as a screen effect that sits on top of the whole frame, so it works on any level and any object.",
+      "Shadows turn cool violet, lights turn warm cream, and the image is broken into soft brushstrokes while edges stay sharp. Everything is controlled from a few sliders, without touching code."
     ],
     pipeline: [
-      { title: "Scene render", text: "GBuffer BaseColor + lit SceneColor" },
-      { title: "Pass 1 · Toon", text: "After DOF, in HDR: light bands + tints", highlight: true },
-      { title: "Tonemapper", text: "Bloom, exposure, color grading" },
-      { title: "Pass 2 · Paint", text: "After tonemapping: Kuwahara filter", highlight: true }
+      { title: "3D scene", text: "Rendered normally by Unreal" },
+      { title: "Light into bands", text: "Shadows and lights become colored zones", highlight: true },
+      { title: "Brushstrokes", text: "A paint filter turns the image into strokes", highlight: true }
     ],
     built: [
-      "Two master post-process materials (Toon and Paint) chained by blendable location through PostProcessInput0.",
-      "Light extraction from the GBuffer: SceneColor ÷ Albedo luminance isolates per-pixel light, rescaled to 0–1.",
-      "Banded lighting with SmoothStep shadow and highlight masks, cool ShadowTint and warm LightTint.",
-      "Screen-space brush-stroke UV distortion and a canvas grain overlay driven by two grayscale textures.",
-      "Kuwahara paint filter written in HLSL in a Custom node, with radius clamped to cap the per-pixel cost.",
-      "14 exposed parameters across two material instances, with documented defaults and useful ranges.",
-      "Self-contained PainterlyLook/ folder: migrates to any project, which only needs a Post Process Volume."
-    ],
-    breakdown: [
-      { title: "Pass 1 — Toon (before the tonemapper)", text: "Runs at Scene Color After DOF so it can read the GBuffer and work on linear HDR light. Because SceneColor ≈ Albedo × Light, dividing their perceived luminances (weights 0.299 / 0.587 / 0.114) isolates the light, with max(LumAlbedo, 0.01) guarding against black albedo. Two SmoothSteps turn it into shadow and highlight masks; albedo is then tinted cool in shadow, warm in light, and the brightest band is lifted by HighlightBoost." },
-      { title: "Keeping what should stay real", text: "A PreserveOriginal blend keeps part of the real lighting so colored and emissive lights still read. A sky mask, saturate(LumAlbedo × 1000), falls back to the untouched scene wherever albedo is black, such as the sky and unlit surfaces." },
-      { title: "Pass 2 — Paint (after the tonemapper)", text: "A classic Kuwahara filter on the final display image: for each pixel it measures mean and variance of four overlapping quadrants and outputs the mean of the most uniform one. Flat areas collapse into painted dabs while edges stay sharp. A final Lerp(Original, Kuwahara, PaintStrength) dials the effect back." },
-      { title: "Performance budget", text: "The radius is clamped to 8, capping the cost at 4 × 81 samples per pixel. The art-directed range of 3–5 costs 64–144 samples per pixel." }
+      "Two post-process materials that work on any scene, with no changes to its objects.",
+      "Colored light bands: cool shadows and warm lights instead of plain darkening.",
+      "A paint filter (Kuwahara) written in HLSL that creates brushstrokes but keeps edges crisp.",
+      "Simple sliders for art direction, packaged in one folder that drops into any project."
     ],
     challenges: [
-      { problem: "Sky turned black after tinting", solution: "The sky writes no albedo, so Albedo × Tint = 0. A sky mask from albedo luminance falls back to SceneColor." },
-      { problem: "Bands shifted while the camera moved", solution: "Auto exposure rescaled luminance every frame. Switched the Post Process Volume to manual exposure." },
-      { problem: "Kuwahara washed out the light ratios", solution: "Filtering before light extraction mixed neighbouring albedo. Split the effect into two passes: toon on GBuffer data, paint on the tonemapped image." },
-      { problem: "Divide-by-zero artifacts on dark surfaces", solution: "Clamped the denominator with max(LumAlbedo, 0.01)." },
-      { problem: "Post-process node previews always black", solution: "Validated each step in the level viewport by temporarily wiring its output to Emissive Color." }
+      { problem: "The sky turned black", solution: "Added a mask so the effect skips areas without a surface, like the sky." },
+      { problem: "Colors flickered while moving", solution: "Locked the camera exposure so the bands stay stable." },
+      { problem: "Brushstrokes washed out the lighting", solution: "Split the effect into two steps: light first, paint second." }
     ],
     next: [
-      "Anisotropic Kuwahara, so strokes follow image structure instead of square blocks",
-      "Depth- and normal-based outlines for painted contour lines",
-      "World-space stroke projection to reduce swimming during camera moves",
-      "Custom stencil masks to treat characters and environments differently"
+      "Brushstrokes that follow the shapes in the image",
+      "Painted outlines around objects",
+      "Before/after video for the portfolio"
     ],
-    learned: "How Unreal's deferred pipeline and blendable locations work, reading GBuffer data in post-process materials, writing HLSL inside Custom nodes, and a step-by-step validation habit: after each stage, wire its output to Emissive Color and check the level, so every bug is caught at the step that introduced it.",
-    code: {
-      title: "Custom node (HLSL) — Kuwahara filter",
-      lang: "hlsl",
-      snippet: `int r = clamp((int)Radius, 1, 8);
-float2 uv = GetDefaultSceneTextureUV(Parameters, 14);
-float2 texel = View.BufferSizeAndInvSize.zw;
-float n = (float)((r + 1) * (r + 1));
-
-float3 mean[4];
-float3 sq[4];
-int2 offs[4] = { int2(-r, -r), int2(0, -r), int2(-r, 0), int2(0, 0) };
-
-for (int k = 0; k < 4; k++)
-{
-    mean[k] = float3(0, 0, 0);
-    sq[k] = float3(0, 0, 0);
-    for (int y = 0; y <= r; y++)
-    {
-        for (int x = 0; x <= r; x++)
-        {
-            float2 o = float2(offs[k].x + x, offs[k].y + y) * texel;
-            float3 c = SceneTextureLookup(uv + o, 14, false).rgb;
-            mean[k] += c;
-            sq[k] += c * c;
-        }
-    }
-}
-
-float best = 1e10;
-float3 result = mean[0] / n;
-for (int i = 0; i < 4; i++)
-{
-    float3 m = mean[i] / n;
-    float3 v = abs(sq[i] / n - m * m);
-    float s = v.r + v.g + v.b;
-    if (s < best) { best = s; result = m; }
-}
-return result;`
-    }
+    learned: "How Unreal builds a frame and where a screen effect can step in, writing shader code inside materials, and testing every step on its own so problems are caught early."
+  },
+  {
+    id: "style-library",
+    type: "featured",
+    title: "One Scene, Four Styles — Post-Process Look Library",
+    status: "Tech study · Complete",
+    event: "",
+    engine: "Unreal Engine 5.5",
+    language: "Materials · HLSL · Blueprints",
+    role: "Solo Developer — Rendering / Tech Art",
+    team: "Solo",
+    duration: "Personal R&D",
+    platform: "PC",
+    summary: "A library of four switchable looks — pixel art, halftone comic, ink drawing and watercolor — that re-renders the same 3D scene in a different 2D style at the press of a key.",
+    cover: "asset/style-library/ink.jpg",
+    video: "",
+    styles: [
+      { key: "0", label: "Original", src: "asset/style-library/original.jpg", text: "The untouched Unreal scene." },
+      { key: "1", label: "Pixel art", src: "asset/style-library/pixel-art.jpg", text: "The screen is split into big square pixels and the colors are limited, like an early console game." },
+      { key: "2", label: "Halftone", src: "asset/style-library/halftone.jpg", text: "A comic-print look: ink dots that grow bigger where the image is darker." },
+      { key: "3", label: "Ink", src: "asset/style-library/ink.jpg", text: "A pen drawing on paper: hatching lines for shading and inked outlines around objects." },
+      { key: "4", label: "Watercolor", src: "asset/style-library/watercolor.jpg", text: "Soft color patches, a lighter wash, darker pigment at the edges and paper grain. Built almost entirely from parts of Painted Light." }
+    ],
+    links: {},
+    tags: ["UE5.5", "Post-Process", "HLSL", "Blueprints", "Tech Art"],
+    overview: [
+      "A follow-up to Painted Light: can one 3D scene be redrawn in completely different 2D styles using only screen effects? I built four looks and a switch that changes between them live while playing.",
+      "All four share the same base, so adding a new style is quick. The watercolor look was assembled almost entirely from pieces built for earlier styles."
+    ],
+    pipeline: [
+      { title: "Four looks", text: "All loaded at the same time" },
+      { title: "One switch", text: "A single global value picks the style", highlight: true },
+      { title: "Live swap", text: "Number keys 0–4 change it while playing", highlight: true }
+    ],
+    built: [
+      "Four post-process looks: pixel art, halftone, ink hatching and watercolor.",
+      "One shared base graph reused by every style, so new looks are fast to add.",
+      "Live style switching from a Blueprint, driven by a single global parameter.",
+      "Reusable shader pieces in HLSL: outline detection from depth and the paint filter from Painted Light.",
+      "Focus mask: a chosen object can stay sharper than the rest of the frame to draw the eye."
+    ],
+    challenges: [
+      { problem: "Old effects stacked on the new ones", solution: "Gave the library its own level and post-process setup." },
+      { problem: "Hatching came out completely white", solution: "Fixed a wrong input by checking each node on screen, one at a time." },
+      { problem: "The same setup repeated four times", solution: "Built a shared base once and copied it; only the style number changes." }
+    ],
+    next: [
+      "Only run the active style, to save performance",
+      "Sharper outlines inside objects, not just around them",
+      "On-screen buttons and a short video cycling through the styles"
+    ],
+    learned: "Designing effects as reusable building blocks, connecting materials to gameplay through Blueprints, and how much faster new looks come together once the base is shared."
   },
   {
     id: "rabbit-heist",

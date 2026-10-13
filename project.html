@@ -103,6 +103,17 @@
                   <input class="compare-range" type="range" min="0" max="100" value="50" aria-label="Before / after slider">
                 </div>
                 <p class="compare-hint hand-note">← drag to compare →</p>`) : ""}
+              ${p.styles?.length ? block("Try the styles", `
+                <div class="styler">
+                  <div class="styler-tabs" role="tablist">${p.styles.map((s, i) => `
+                    <button type="button" role="tab" class="styler-tab${i === 0 ? " is-on" : ""}" data-i="${i}"><kbd class="mono">${s.key}</kbd>${s.label}</button>`).join("")}
+                  </div>
+                  <div class="styler-view">${p.styles.map((s, i) => `
+                    <img src="${s.src}" alt="${p.title} — ${s.label}" class="${i === 0 ? "is-on" : ""}" ${i === 0 ? "" : 'loading="lazy"'}>`).join("")}
+                  </div>
+                  <p class="styler-text">${p.styles[0].text}</p>
+                </div>
+                <p class="compare-hint hand-note">click a style, or press 0–${p.styles.length - 1} like in the demo</p>`) : ""}
               ${p.pipeline?.length ? block("How it works", `
                 <div class="pipeline">${p.pipeline.map((s, i) => `
                   <div class="pipe-step${s.highlight ? " is-hl" : ""}"><span class="mono">${String(i + 1).padStart(2, "0")}</span><strong>${s.title}</strong><p>${s.text}</p></div>`).join('<span class="pipe-arrow" aria-hidden="true">→</span>')}
@@ -137,6 +148,26 @@
         </div>
       </section>`;
   }
+
+  /* style switcher (buttons + number keys, like the in-engine demo) */
+  document.querySelectorAll(".styler").forEach(box => {
+    const p = PROJECTS[idx];
+    const tabs = [...box.querySelectorAll(".styler-tab")];
+    const imgs = [...box.querySelectorAll(".styler-view img")];
+    const text = box.querySelector(".styler-text");
+    const show = i => {
+      if (!p.styles[i]) return;
+      tabs.forEach((t, k) => t.classList.toggle("is-on", k === i));
+      imgs.forEach((im, k) => im.classList.toggle("is-on", k === i));
+      text.textContent = p.styles[i].text;
+    };
+    tabs.forEach(t => t.addEventListener("click", () => show(+t.dataset.i)));
+    addEventListener("keydown", ev => {
+      if (ev.ctrlKey || ev.metaKey || ev.altKey || ev.target.closest?.("input, textarea")) return;
+      const i = p.styles.findIndex(s => s.key === ev.key);
+      if (i !== -1) show(i);
+    });
+  });
 
   /* before / after slider */
   document.querySelectorAll(".compare").forEach(box => {
