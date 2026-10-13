@@ -21,6 +21,113 @@ cv: "asset/Diego_Meleddu_CV.pdf",
    --------------------------------------------------------- */
 const PROJECTS = [
   {
+    id: "painterly-post-process",
+    type: "featured",
+    title: "Painted Light — Painterly Post-Process",
+    status: "Tech study · Complete",
+    event: "",
+    engine: "Unreal Engine 5.5",
+    language: "Materials · HLSL",
+    role: "Solo Developer — Rendering / Tech Art",
+    team: "Solo",
+    duration: "Personal R&D",
+    platform: "PC · Deferred renderer + Lumen",
+    summary: "A portable two-pass post-process stack that turns a standard PBR scene into a hand-painted 3D look: banded colored light, brushwork and a Kuwahara paint filter. No per-object materials, no code plugins.",
+    cover: "asset/painterly-post-process/after.jpg",
+    video: "",
+    compare: {
+      before: "asset/painterly-post-process/before.jpg",
+      after: "asset/painterly-post-process/after.jpg",
+      beforeLabel: "Default UE5 render",
+      afterLabel: "Painterly post-process"
+    },
+    gallery: [
+      { src: "asset/painterly-post-process/after.jpg", caption: "Final look: cool violet shadows, warm cream light, brushed edges" },
+      { src: "asset/painterly-post-process/before.jpg", caption: "Same scene with the default PBR render" },
+      { src: "asset/painterly-post-process/iteration.jpg", caption: "Earlier iteration: Kuwahara brushwork on an untinted pass" }
+    ],
+    links: {},
+    tags: ["UE5.5", "Post-Process", "HLSL", "Kuwahara", "GBuffer", "Tech Art"],
+    overview: [
+      "The goal is the painted-3D style used in stylized animated series and games: 3D geometry and camera, but light and shadow treated like hand-painted 2D work. I broke the look down into four traits a shader can target — banded light, colored shadows, brushwork and a physical canvas medium — and built them as a global look layer for Unreal Engine 5.5.",
+      "Everything is a post-process, so it applies to every actor in the frame and travels between projects with a single Migrate. Art direction happens entirely through material instance parameters, with live viewport feedback and no recompiles."
+    ],
+    pipeline: [
+      { title: "Scene render", text: "GBuffer BaseColor + lit SceneColor" },
+      { title: "Pass 1 · Toon", text: "After DOF, in HDR: light bands + tints", highlight: true },
+      { title: "Tonemapper", text: "Bloom, exposure, color grading" },
+      { title: "Pass 2 · Paint", text: "After tonemapping: Kuwahara filter", highlight: true }
+    ],
+    built: [
+      "Two master post-process materials (Toon and Paint) chained by blendable location through PostProcessInput0.",
+      "Light extraction from the GBuffer: SceneColor ÷ Albedo luminance isolates per-pixel light, rescaled to 0–1.",
+      "Banded lighting with SmoothStep shadow and highlight masks, cool ShadowTint and warm LightTint.",
+      "Screen-space brush-stroke UV distortion and a canvas grain overlay driven by two grayscale textures.",
+      "Kuwahara paint filter written in HLSL in a Custom node, with radius clamped to cap the per-pixel cost.",
+      "14 exposed parameters across two material instances, with documented defaults and useful ranges.",
+      "Self-contained PainterlyLook/ folder: migrates to any project, which only needs a Post Process Volume."
+    ],
+    breakdown: [
+      { title: "Pass 1 — Toon (before the tonemapper)", text: "Runs at Scene Color After DOF so it can read the GBuffer and work on linear HDR light. Because SceneColor ≈ Albedo × Light, dividing their perceived luminances (weights 0.299 / 0.587 / 0.114) isolates the light, with max(LumAlbedo, 0.01) guarding against black albedo. Two SmoothSteps turn it into shadow and highlight masks; albedo is then tinted cool in shadow, warm in light, and the brightest band is lifted by HighlightBoost." },
+      { title: "Keeping what should stay real", text: "A PreserveOriginal blend keeps part of the real lighting so colored and emissive lights still read. A sky mask, saturate(LumAlbedo × 1000), falls back to the untouched scene wherever albedo is black, such as the sky and unlit surfaces." },
+      { title: "Pass 2 — Paint (after the tonemapper)", text: "A classic Kuwahara filter on the final display image: for each pixel it measures mean and variance of four overlapping quadrants and outputs the mean of the most uniform one. Flat areas collapse into painted dabs while edges stay sharp. A final Lerp(Original, Kuwahara, PaintStrength) dials the effect back." },
+      { title: "Performance budget", text: "The radius is clamped to 8, capping the cost at 4 × 81 samples per pixel. The art-directed range of 3–5 costs 64–144 samples per pixel." }
+    ],
+    challenges: [
+      { problem: "Sky turned black after tinting", solution: "The sky writes no albedo, so Albedo × Tint = 0. A sky mask from albedo luminance falls back to SceneColor." },
+      { problem: "Bands shifted while the camera moved", solution: "Auto exposure rescaled luminance every frame. Switched the Post Process Volume to manual exposure." },
+      { problem: "Kuwahara washed out the light ratios", solution: "Filtering before light extraction mixed neighbouring albedo. Split the effect into two passes: toon on GBuffer data, paint on the tonemapped image." },
+      { problem: "Divide-by-zero artifacts on dark surfaces", solution: "Clamped the denominator with max(LumAlbedo, 0.01)." },
+      { problem: "Post-process node previews always black", solution: "Validated each step in the level viewport by temporarily wiring its output to Emissive Color." }
+    ],
+    next: [
+      "Anisotropic Kuwahara, so strokes follow image structure instead of square blocks",
+      "Depth- and normal-based outlines for painted contour lines",
+      "World-space stroke projection to reduce swimming during camera moves",
+      "Custom stencil masks to treat characters and environments differently"
+    ],
+    learned: "How Unreal's deferred pipeline and blendable locations work, reading GBuffer data in post-process materials, writing HLSL inside Custom nodes, and a step-by-step validation habit: after each stage, wire its output to Emissive Color and check the level, so every bug is caught at the step that introduced it.",
+    code: {
+      title: "Custom node (HLSL) — Kuwahara filter",
+      lang: "hlsl",
+      snippet: `int r = clamp((int)Radius, 1, 8);
+float2 uv = GetDefaultSceneTextureUV(Parameters, 14);
+float2 texel = View.BufferSizeAndInvSize.zw;
+float n = (float)((r + 1) * (r + 1));
+
+float3 mean[4];
+float3 sq[4];
+int2 offs[4] = { int2(-r, -r), int2(0, -r), int2(-r, 0), int2(0, 0) };
+
+for (int k = 0; k < 4; k++)
+{
+    mean[k] = float3(0, 0, 0);
+    sq[k] = float3(0, 0, 0);
+    for (int y = 0; y <= r; y++)
+    {
+        for (int x = 0; x <= r; x++)
+        {
+            float2 o = float2(offs[k].x + x, offs[k].y + y) * texel;
+            float3 c = SceneTextureLookup(uv + o, 14, false).rgb;
+            mean[k] += c;
+            sq[k] += c * c;
+        }
+    }
+}
+
+float best = 1e10;
+float3 result = mean[0] / n;
+for (int i = 0; i < 4; i++)
+{
+    float3 m = mean[i] / n;
+    float3 v = abs(sq[i] / n - m * m);
+    float s = v.r + v.g + v.b;
+    if (s < best) { best = s; result = m; }
+}
+return result;`
+    }
+  },
+  {
     id: "rabbit-heist",
     type: "featured",
     title: "Rabbit Heist",

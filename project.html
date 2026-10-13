@@ -93,10 +93,26 @@
             <article class="project-main reveal">
               ${p.note ? `<div class="note">${p.note}</div>` : ""}
               ${p.overview?.length ? block("Overview", p.overview.map(t => `<p>${t}</p>`).join("")) : ""}
+              ${p.compare ? block("Before / after", `
+                <div class="compare" style="--pos: 50%">
+                  <img src="${p.compare.before}" alt="${p.compare.beforeLabel || "Before"}">
+                  <img class="compare-after" src="${p.compare.after}" alt="${p.compare.afterLabel || "After"}">
+                  <span class="compare-line" aria-hidden="true"></span>
+                  <span class="compare-tag compare-tag-l mono">${p.compare.beforeLabel || "Before"}</span>
+                  <span class="compare-tag compare-tag-r mono">${p.compare.afterLabel || "After"}</span>
+                  <input class="compare-range" type="range" min="0" max="100" value="50" aria-label="Before / after slider">
+                </div>
+                <p class="compare-hint hand-note">← drag to compare →</p>`) : ""}
+              ${p.pipeline?.length ? block("How it works", `
+                <div class="pipeline">${p.pipeline.map((s, i) => `
+                  <div class="pipe-step${s.highlight ? " is-hl" : ""}"><span class="mono">${String(i + 1).padStart(2, "0")}</span><strong>${s.title}</strong><p>${s.text}</p></div>`).join('<span class="pipe-arrow" aria-hidden="true">→</span>')}
+                </div>`) : ""}
               ${p.built?.length ? block("What I built", list(p.built)) : ""}
               ${p.extensions?.length ? block("Beyond the course", list(p.extensions)) : ""}
               ${p.breakdown?.length ? block("Technical breakdown", `<div class="breakdown">${p.breakdown.map(b => `
                 <div class="breakdown-item"><h3>${b.title}</h3><p>${b.text}</p></div>`).join("")}</div>`) : ""}
+              ${p.challenges?.length ? block("Challenges & solutions", `<div class="challenges">${p.challenges.map(c => `
+                <div class="challenge"><h3>${c.problem}</h3><p>${c.solution}</p></div>`).join("")}</div>`) : ""}
               ${p.youtubeId ? block("Video", `<div class="yt-frame"><iframe src="https://www.youtube-nocookie.com/embed/${p.youtubeId}" title="${p.title} video" allowfullscreen loading="lazy"></iframe></div>`) : ""}
               ${p.gallery?.length ? block("Gallery", `<div class="gallery">${p.gallery.map(g => `
                 <figure><img src="${g.src}" alt="${g.caption || p.title}" loading="lazy" onerror="const g=this.closest('.gallery'); this.closest('figure').remove(); if (!g.querySelector('figure')) g.closest('.block').remove();">${g.caption ? `<figcaption>${g.caption}</figcaption>` : ""}</figure>`).join("")}</div>`) : ""}
@@ -105,6 +121,7 @@
                   <div class="code-head mono"><i></i><i></i><i></i>${p.code.title || ""}</div>
                   <pre><code>${esc(p.code.snippet)}</code></pre>
                 </div>`) : ""}
+              ${p.next?.length ? block("Next steps", `<ul class="next-list">${p.next.map(i => `<li>${i}</li>`).join("")}</ul>`) : ""}
               ${p.learned ? block("What I learned", `<p>${p.learned}</p>`) : ""}
             </article>
             <aside class="meta-panel paper taped reveal">
@@ -120,6 +137,12 @@
         </div>
       </section>`;
   }
+
+  /* before / after slider */
+  document.querySelectorAll(".compare").forEach(box => {
+    const range = box.querySelector(".compare-range");
+    range.addEventListener("input", () => box.style.setProperty("--pos", range.value + "%"));
+  });
 
   applySiteLinks();
   initNav();
