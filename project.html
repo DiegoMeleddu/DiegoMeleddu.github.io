@@ -5,10 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Project — Diego Meleddu</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&family=Kalam&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
-<body class="project-page">
+<body>
 
 <nav class="nav">
   <div class="container">
@@ -17,10 +18,10 @@
     <ul class="nav-links">
       <li><a href="index.html#about">About</a></li>
       <li><a href="index.html#wip">In progress</a></li>
-      <li><a href="index.html#projects">Projects</a></li>
+      <li><a href="index.html#projects">Work</a></li>
       <li><a href="index.html#skills">Skills</a></li>
       <li><a href="index.html#contact">Contact</a></li>
-      <li><a data-cv class="nav-cv">CV ↓</a></li>
+      <li><a data-cv class="nav-cv">CV</a></li>
     </ul>
   </div>
 </nav>
@@ -28,12 +29,11 @@
 <main id="project"></main>
 
 <footer>
-  <div class="container mono">© <span data-year></span> Diego Meleddu · Gameplay Programmer</div>
+  <div class="container"><span>© <span data-year></span> Diego Meleddu</span><span>Gameplay Programmer · Unreal Engine 5</span></div>
 </footer>
 
 <script src="data.js"></script>
 <script src="app.js"></script>
-<script src="asset/extras.js"></script>
 <script>
   const root = document.getElementById("project");
   const idx = PROJECTS.findIndex(p => p.id === new URLSearchParams(location.search).get("id"));
@@ -41,10 +41,10 @@
   if (idx === -1) {
     root.innerHTML = `
       <section class="container notfound">
-        <span class="label mono">404 — Not found</span>
-        <h1>Nothing on this workbench.</h1>
+        <span class="p-label">404</span>
+        <h1>Project not found.</h1>
         <p>This project doesn't exist (yet).</p>
-        <a href="index.html#projects" class="btn btn-primary">Back to projects</a>
+        <a href="index.html#projects" class="btn btn-primary">Back to work</a>
       </section>`;
   } else {
     const p = PROJECTS[idx];
@@ -54,126 +54,131 @@
 
     let n = 0;
     const block = (title, content) => `
-      <div class="block">
-        <span class="block-index mono">${String(++n).padStart(2, "0")} — ${title.toUpperCase()}</span>
+      <div class="block reveal">
+        <span class="block-idx">${String(++n).padStart(2, "0")}</span>
         <h2>${title}</h2>
         ${content}
       </div>`;
-    const list = items => `<ul class="built-list">${items.map(i => `<li>${i}</li>`).join("")}</ul>`;
+    const list = items => `<ul class="list">${items.map(i => `<li>${i}</li>`).join("")}</ul>`;
 
     const meta = [
-      ["Role", p.role], ["Engine", p.engine], ["Language", p.language], ["Team", p.team],
+      ["Role", p.role], ["Engine", p.engine], ["Tools", p.language], ["Team", p.team],
       ["Duration", p.duration], ["Event", p.event], ["Platform", p.platform], ["Status", p.status]
     ].filter(([, v]) => v);
 
     const links = p.links || {};
     const actions = [
       links.itch && `<a class="btn btn-primary" href="${links.itch}" target="_blank" rel="noopener">Play on itch.io ↗</a>`,
-      links.github && `<a class="btn btn-ghost" href="${links.github}" target="_blank" rel="noopener">Source on GitHub ↗</a>`,
+      links.github && `<a class="btn btn-ghost" href="${links.github}" target="_blank" rel="noopener">Source code ↗</a>`,
       links.youtube && `<a class="btn btn-ghost" href="${links.youtube}" target="_blank" rel="noopener">Watch video ↗</a>`
     ].filter(Boolean).join("");
 
+    const sections = [
+      p.overview?.length && block("Overview", p.overview.map(t => `<p>${t}</p>`).join("")),
+
+      p.compare && block("Before / after", `
+        <div class="compare" style="--pos: 50%">
+          <img src="${p.compare.before}" alt="${p.compare.beforeLabel || "Before"}">
+          <img class="compare-after" src="${p.compare.after}" alt="${p.compare.afterLabel || "After"}">
+          <span class="compare-line" aria-hidden="true"></span>
+          <span class="compare-tag l">${p.compare.beforeLabel || "Before"}</span>
+          <span class="compare-tag r">${p.compare.afterLabel || "After"}</span>
+          <input class="compare-range" type="range" min="0" max="100" value="50" aria-label="Before / after slider">
+        </div>
+        <p class="hint">Drag to compare.</p>`),
+
+      p.styles?.length && block("Try the styles", `
+        <div class="styler">
+          <div class="tabs" role="tablist">${p.styles.map((s, i) => `
+            <button type="button" role="tab" class="tab${i === 0 ? " on" : ""}" data-i="${i}"><kbd>${s.key}</kbd>${s.label}</button>`).join("")}
+          </div>
+          <div class="view">${p.styles.map((s, i) => `
+            <img src="${s.src}" alt="${p.title} — ${s.label}" class="${i === 0 ? "on" : ""}">`).join("")}
+          </div>
+          <p class="view-text">${p.styles[0].text}</p>
+        </div>
+        <p class="hint">Click a style or press 0–${p.styles.length - 1}, like in the demo.</p>`),
+
+      p.pipeline?.length && block("How it works", `
+        <div class="pipeline">${p.pipeline.map((s, i) => `
+          <div class="step${s.highlight ? " hl" : ""}"><span>${String(i + 1).padStart(2, "0")}</span><strong>${s.title}</strong><p>${s.text}</p></div>`).join('<span class="arrow" aria-hidden="true">→</span>')}
+        </div>`),
+
+      p.built?.length && block("What I built", list(p.built)),
+
+      p.breakdown?.length && block("Technical notes", `<div class="boxes">${p.breakdown.map(b => `
+        <div class="box"><h3>${b.title}</h3><p>${b.text}</p></div>`).join("")}</div>`),
+
+      p.challenges?.length && block("Problems solved", `<div class="boxes">${p.challenges.map(c => `
+        <div class="box"><span class="box-label">Problem</span><h3>${c.problem}</h3><p>${c.solution}</p></div>`).join("")}</div>`),
+
+      p.youtubeId && block("Video", `<div class="yt"><iframe src="https://www.youtube-nocookie.com/embed/${p.youtubeId}" title="${p.title} video" allowfullscreen loading="lazy"></iframe></div>`),
+
+      p.gallery?.length && block("Gallery", `<div class="gallery">${p.gallery.map(g => `
+        <figure><img src="${g.src}" alt="${g.caption || p.title}" loading="lazy" onerror="const g=this.closest('.gallery'); this.closest('figure').remove(); if (!g.querySelector('figure')) g.closest('.block').remove();">${g.caption ? `<figcaption>${g.caption}</figcaption>` : ""}</figure>`).join("")}</div>`),
+
+      p.code && block("Code sample", `
+        <div class="code"><div class="code-head">${p.code.title || ""}</div><pre><code>${esc(p.code.snippet)}</code></pre></div>`),
+
+      p.next?.length && block("Next steps", list(p.next)),
+
+      p.learned && block("What I learned", `<p>${p.learned}</p>`)
+    ].filter(Boolean).join("");
+
     root.innerHTML = `
-      <section class="project-top">
+      <section class="p-top" style="border-top: 0">
         <div class="container">
-          <a href="index.html#${p.type === "wip" ? "wip" : "projects"}" class="back-link mono">← Back to projects</a>
-          <div class="project-header">
-            <span class="label mono">${p.type === "wip" ? "On the workbench" : "Project"} — ${p.event || p.engine}</span>
-            <h1>${p.title}</h1>
-            <p class="project-lead">${p.summary}</p>
-            ${tagsHTML(p.tags)}
-            ${actions ? `<div class="btn-row">${actions}</div>` : ""}
-          </div>
+          <a href="index.html#${p.type === "wip" ? "wip" : "projects"}" class="back">← Back to work</a>
+          <span class="p-label">${p.type === "wip" ? "In development" : "Project"} · ${p.event || p.engine}</span>
+          <h1>${p.title}</h1>
+          <p class="p-lead">${p.summary}</p>
+          ${tagsHTML(p.tags)}
+          ${actions ? `<div class="btn-row">${actions}</div>` : ""}
 
-          <div class="project-media paper taped reveal">
-            <div class="media-frame">${mediaHTML(p, { controls: true })}</div>
-          </div>
+          <div class="p-media"><div class="media">${mediaHTML(p, { controls: true })}</div></div>
 
-          <div class="project-layout">
-            <article class="project-main reveal">
+          <div class="p-layout">
+            <article class="p-main">
               ${p.note ? `<div class="note">${p.note}</div>` : ""}
-              ${p.overview?.length ? block("Overview", p.overview.map(t => `<p>${t}</p>`).join("")) : ""}
-              ${p.compare ? block("Before / after", `
-                <div class="compare" style="--pos: 50%">
-                  <img src="${p.compare.before}" alt="${p.compare.beforeLabel || "Before"}">
-                  <img class="compare-after" src="${p.compare.after}" alt="${p.compare.afterLabel || "After"}">
-                  <span class="compare-line" aria-hidden="true"></span>
-                  <span class="compare-tag compare-tag-l mono">${p.compare.beforeLabel || "Before"}</span>
-                  <span class="compare-tag compare-tag-r mono">${p.compare.afterLabel || "After"}</span>
-                  <input class="compare-range" type="range" min="0" max="100" value="50" aria-label="Before / after slider">
-                </div>
-                <p class="compare-hint hand-note">← drag to compare →</p>`) : ""}
-              ${p.styles?.length ? block("Try the styles", `
-                <div class="styler">
-                  <div class="styler-tabs" role="tablist">${p.styles.map((s, i) => `
-                    <button type="button" role="tab" class="styler-tab${i === 0 ? " is-on" : ""}" data-i="${i}"><kbd class="mono">${s.key}</kbd>${s.label}</button>`).join("")}
-                  </div>
-                  <div class="styler-view">${p.styles.map((s, i) => `
-                    <img src="${s.src}" alt="${p.title} — ${s.label}" class="${i === 0 ? "is-on" : ""}" ${i === 0 ? "" : 'loading="lazy"'}>`).join("")}
-                  </div>
-                  <p class="styler-text">${p.styles[0].text}</p>
-                </div>
-                <p class="compare-hint hand-note">click a style, or press 0–${p.styles.length - 1} like in the demo</p>`) : ""}
-              ${p.pipeline?.length ? block("How it works", `
-                <div class="pipeline">${p.pipeline.map((s, i) => `
-                  <div class="pipe-step${s.highlight ? " is-hl" : ""}"><span class="mono">${String(i + 1).padStart(2, "0")}</span><strong>${s.title}</strong><p>${s.text}</p></div>`).join('<span class="pipe-arrow" aria-hidden="true">→</span>')}
-                </div>`) : ""}
-              ${p.built?.length ? block("What I built", list(p.built)) : ""}
-              ${p.extensions?.length ? block("Beyond the course", list(p.extensions)) : ""}
-              ${p.breakdown?.length ? block("Technical breakdown", `<div class="breakdown">${p.breakdown.map(b => `
-                <div class="breakdown-item"><h3>${b.title}</h3><p>${b.text}</p></div>`).join("")}</div>`) : ""}
-              ${p.challenges?.length ? block("Challenges & solutions", `<div class="challenges">${p.challenges.map(c => `
-                <div class="challenge"><h3>${c.problem}</h3><p>${c.solution}</p></div>`).join("")}</div>`) : ""}
-              ${p.youtubeId ? block("Video", `<div class="yt-frame"><iframe src="https://www.youtube-nocookie.com/embed/${p.youtubeId}" title="${p.title} video" allowfullscreen loading="lazy"></iframe></div>`) : ""}
-              ${p.gallery?.length ? block("Gallery", `<div class="gallery">${p.gallery.map(g => `
-                <figure><img src="${g.src}" alt="${g.caption || p.title}" loading="lazy" onerror="const g=this.closest('.gallery'); this.closest('figure').remove(); if (!g.querySelector('figure')) g.closest('.block').remove();">${g.caption ? `<figcaption>${g.caption}</figcaption>` : ""}</figure>`).join("")}</div>`) : ""}
-              ${p.code ? block("Code sample", `
-                <div class="code-block">
-                  <div class="code-head mono"><i></i><i></i><i></i>${p.code.title || ""}</div>
-                  <pre><code>${esc(p.code.snippet)}</code></pre>
-                </div>`) : ""}
-              ${p.next?.length ? block("Next steps", `<ul class="next-list">${p.next.map(i => `<li>${i}</li>`).join("")}</ul>`) : ""}
-              ${p.learned ? block("What I learned", `<p>${p.learned}</p>`) : ""}
+              ${sections}
             </article>
-            <aside class="meta-panel paper taped reveal">
-              <h4 class="mono">PROJECT INFO</h4>
+            <aside class="meta">
               <dl>${meta.map(([k, v]) => `<dt>${k}</dt><dd>${v}</dd>`).join("")}</dl>
             </aside>
           </div>
 
-          <nav class="project-nav">
-            <a href="project.html?id=${prev.id}"><span>← PREVIOUS</span><strong>${prev.title}</strong></a>
-            <a href="project.html?id=${next.id}"><span>NEXT →</span><strong>${next.title}</strong></a>
+          <nav class="p-nav">
+            <a href="project.html?id=${prev.id}"><span>← Previous</span><strong>${prev.title}</strong></a>
+            <a href="project.html?id=${next.id}"><span>Next →</span><strong>${next.title}</strong></a>
           </nav>
         </div>
       </section>`;
-  }
 
-  /* style switcher (buttons + number keys, like the in-engine demo) */
-  document.querySelectorAll(".styler").forEach(box => {
-    const p = PROJECTS[idx];
-    const tabs = [...box.querySelectorAll(".styler-tab")];
-    const imgs = [...box.querySelectorAll(".styler-view img")];
-    const text = box.querySelector(".styler-text");
-    const show = i => {
-      if (!p.styles[i]) return;
-      tabs.forEach((t, k) => t.classList.toggle("is-on", k === i));
-      imgs.forEach((im, k) => im.classList.toggle("is-on", k === i));
-      text.textContent = p.styles[i].text;
-    };
-    tabs.forEach(t => t.addEventListener("click", () => show(+t.dataset.i)));
-    addEventListener("keydown", ev => {
-      if (ev.ctrlKey || ev.metaKey || ev.altKey || ev.target.closest?.("input, textarea")) return;
-      const i = p.styles.findIndex(s => s.key === ev.key);
-      if (i !== -1) show(i);
+    /* style switcher (buttons + number keys, like the in-engine demo) */
+    root.querySelectorAll(".styler").forEach(box => {
+      const tabs = [...box.querySelectorAll(".tab")];
+      const imgs = [...box.querySelectorAll(".view img")];
+      const text = box.querySelector(".view-text");
+      const show = i => {
+        if (!p.styles[i]) return;
+        tabs.forEach((t, k) => t.classList.toggle("on", k === i));
+        imgs.forEach((im, k) => im.classList.toggle("on", k === i));
+        text.textContent = p.styles[i].text;
+      };
+      tabs.forEach(t => t.addEventListener("click", () => show(+t.dataset.i)));
+      addEventListener("keydown", ev => {
+        if (ev.ctrlKey || ev.metaKey || ev.altKey) return;
+        const i = p.styles.findIndex(s => s.key === ev.key);
+        if (i !== -1) show(i);
+      });
     });
-  });
 
-  /* before / after slider */
-  document.querySelectorAll(".compare").forEach(box => {
-    const range = box.querySelector(".compare-range");
-    range.addEventListener("input", () => box.style.setProperty("--pos", range.value + "%"));
-  });
+    /* before / after slider */
+    root.querySelectorAll(".compare").forEach(box => {
+      const range = box.querySelector(".compare-range");
+      range.addEventListener("input", () => box.style.setProperty("--pos", range.value + "%"));
+    });
+  }
 
   applySiteLinks();
   initNav();

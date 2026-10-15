@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -6,10 +6,11 @@
 <title>Diego Meleddu — Gameplay Programmer | Unreal Engine 5 & C++</title>
 <meta name="description" content="Portfolio of Diego Meleddu, gameplay programmer specialising in Unreal Engine 5, C++ and Blueprints. Open to work in Amsterdam and remote.">
 <meta property="og:title" content="Diego Meleddu — Gameplay Programmer">
-<meta property="og:description" content="Unreal Engine 5 · C++ · Blueprints — gameplay systems, AI and mechanics.">
-<meta property="og:image" content="assets/og-preview.png">
+<meta property="og:description" content="Unreal Engine 5 · C++ · Blueprints — gameplay systems, AI and tech art.">
+<meta property="og:image" content="https://diegomeleddu.github.io/asset/og-preview.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&family=Kalam&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -21,69 +22,57 @@
     <ul class="nav-links">
       <li><a href="#about">About</a></li>
       <li><a href="#wip">In progress</a></li>
-      <li><a href="#projects">Projects</a></li>
+      <li><a href="#projects">Work</a></li>
       <li><a href="#skills">Skills</a></li>
       <li><a href="#contact">Contact</a></li>
-      <li><a data-cv class="nav-cv">CV ↓</a></li>
+      <li><a data-cv class="nav-cv">CV</a></li>
     </ul>
   </div>
 </nav>
 
 <header class="hero" id="top">
-  <div class="ruler" aria-hidden="true"></div>
-  <div class="container hero-inner">
-    <div class="hero-text">
-      <p class="eyebrow mono">Portfolio · <span data-year></span></p>
-      <h1>Diego Meleddu<span class="h1-role">Gameplay programmer.<br>Unreal Engine 5 &amp; C++.</span></h1>
-      <p class="hero-lead">I build gameplay systems, enemy AI and mechanics, and I like them readable, tunable and fun to play against.</p>
-      <div class="btn-row">
-        <a href="#projects" class="btn btn-primary">See the work</a>
-        <a data-cv class="btn btn-ghost">Download CV</a>
-      </div>
+  <div class="container">
+    <div class="status"><span class="dot"></span>Open to work · Amsterdam or remote</div>
+    <h1>Diego Meleddu</h1>
+    <p class="hero-role"><strong>Gameplay programmer</strong> working in Unreal Engine 5 and C++.</p>
+    <p class="hero-lead">I build gameplay systems, enemy AI and stylized rendering effects, and I like them readable, tunable and fun to play.</p>
+    <div class="btn-row">
+      <a href="#projects" class="btn btn-primary">See the work</a>
+      <a data-cv class="btn btn-ghost">Download CV</a>
     </div>
-    <aside class="spec-card paper taped">
-      <span class="stamp">Open to work</span>
-      <p class="spec-title mono">SPEC SHEET / 001</p>
-      <dl class="spec-list">
-        <dt>Name</dt><dd>Diego Meleddu</dd>
-        <dt>Role</dt><dd>Gameplay Programmer</dd>
-        <dt>Engine</dt><dd>Unreal Engine 5</dd>
-        <dt>Language</dt><dd>C++ · Blueprints</dd>
-        <dt>Jam games</dt><dd><span id="statShipped">0</span> playable on itch.io</dd>
-        <dt>Based</dt><dd>Amsterdam · open to remote</dd>
-      </dl>
-      <p class="hand-note">currently building an action RPG in C++</p>
-    </aside>
+    <div class="hero-facts">
+      <div><span>Engine</span>Unreal Engine 5</div>
+      <div><span>Languages</span>C++ · Blueprints · HLSL</div>
+      <div><span>Projects</span><b id="statProjects">0</b> playable &amp; tech studies</div>
+    </div>
   </div>
 </header>
 
 <section id="about">
   <div class="container">
     <div class="section-head reveal">
-      <span class="label mono">01 — About</span>
-      <h2>The person behind the code</h2>
+      <div><span class="idx">01</span><h2>About</h2></div>
     </div>
-    <div class="about-grid">
+    <div class="about">
       <div class="about-text reveal">
         <p>I'm <strong>Diego</strong>, a gameplay programmer focused on <strong>Unreal Engine 5 and C++</strong>.</p>
-        <p>I come from a <strong>Computer Science</strong> background and spent four years at <strong>Amazon Logistics</strong> as a Process Specialist and Data Analyst: auditing systems, finding where processes broke and fixing them with data. That mindset carries straight into game development: debugging, iterating and building systems that hold up under pressure.</p>
-        <p>After the programming track at <strong>Event Horizon School of Game Development</strong>, I've been working as an independent developer since 2024: building gameplay systems in C++ and Blueprints, entering game jams and experimenting with AI, multiplayer and procedural mechanics.</p>
-        <p>I'm looking for a role as a <strong>Gameplay Programmer</strong>, and I'm also open to Tools Developer positions.</p>
+        <p>I have a <strong>Computer Science</strong> background and spent four years at <strong>Amazon Logistics</strong> as a Process Specialist and Data Analyst, finding where systems broke and fixing them with data. I bring the same mindset to games: debug, iterate, build things that hold up.</p>
+        <p>After the programming track at <strong>Event Horizon School of Game Development</strong>, I've been working independently since 2024 on gameplay systems, game jams and stylized rendering.</p>
         <ul class="facts">
+          <li><span>Looking for</span><span>Gameplay or Tools Programmer</span></li>
           <li><span>Location</span><span>Amsterdam · open to remote</span></li>
-          <li><span>Focus</span><span>Gameplay · AI · Systems</span></li>
-          <li><span>Languages</span><span>Italian (native) · English (professional)</span></li>
+          <li><span>Languages</span><span>Italian · English</span></li>
         </ul>
-        <a data-cv class="btn btn-primary">Download CV</a>
+        <a data-cv class="btn btn-ghost">Download CV</a>
       </div>
-      <div class="cv-sheet paper taped reveal">
-        <h3 class="sub-title">Career &amp; education</h3>
-        <div class="timeline" id="timeline"></div>
+      <div class="reveal">
+        <p class="sub">Experience &amp; education</p>
+        <ul class="timeline" id="timeline"></ul>
       </div>
     </div>
-    <div class="courses">
-      <h3 class="sub-title reveal">Training &amp; certifications</h3>
-      <div class="courses-grid" id="coursesGrid"></div>
+    <div class="courses reveal">
+      <p class="sub">Training</p>
+      <div id="courses"></div>
     </div>
   </div>
 </section>
@@ -91,145 +80,118 @@
 <section id="wip">
   <div class="container">
     <div class="section-head reveal">
-      <span class="label mono">02 — On the workbench</span>
-      <h2>Work in progress</h2>
-      <p>Unreal Engine 5 projects I'm building right now, updated as they evolve.</p>
-      <span class="hand-note">↓ open a card to follow the progress</span>
+      <div><span class="idx">02</span><h2>In development</h2></div>
+      <p>Unreal Engine 5 projects I'm building right now.</p>
     </div>
-    <div class="wip-list" id="wipList"></div>
+    <div class="wip-grid" id="wipList"></div>
   </div>
 </section>
 
 <section id="projects">
   <div class="container">
     <div class="section-head reveal">
-      <span class="label mono">03 — Finished work</span>
-      <h2>Things I've built</h2>
-      <p>Game jam entries and personal projects you can play, each with a breakdown of what I programmed and how it works.</p>
-      <span class="hand-note">↓ open a card for the full breakdown</span>
+      <div><span class="idx">03</span><h2>Selected work</h2></div>
+      <p>Rendering studies and games you can play, each with a short breakdown.</p>
     </div>
-    <div class="cards-grid" id="featuredGrid"></div>
+    <div class="cards" id="featuredGrid"></div>
   </div>
 </section>
 
 <section id="jams">
   <div class="container">
     <div class="section-head reveal">
-      <span class="label mono">04 — Game jams</span>
-      <h2>Small games, real deadlines</h2>
-      <p>Scope it, build it, finish it. A few more games made under jam constraints.</p>
+      <div><span class="idx">04</span><h2>More game jams</h2></div>
+      <p>Small games made under tight deadlines.</p>
     </div>
-    <div class="jams-grid" id="jamsGrid"></div>
-    <a class="link-more mono" data-link="itch">All games on itch.io →</a>
+    <div class="jams reveal" id="jamsList"></div>
+    <a class="link-more" data-link="itch">All games on itch.io →</a>
   </div>
 </section>
 
 <section id="skills">
   <div class="container">
     <div class="section-head reveal">
-      <span class="label mono">05 — Toolbox</span>
-      <h2>Skills &amp; tools</h2>
-      <p>Focused on gameplay programming in Unreal Engine, with a broader toolkit for prototyping and production.</p>
+      <div><span class="idx">05</span><h2>Skills</h2></div>
     </div>
-    <div class="skills-grid" id="skillsGrid"></div>
+    <div class="skills reveal" id="skillsGrid"></div>
   </div>
 </section>
 
 <section id="contact">
-  <div class="container">
-    <div class="contact-box paper taped reveal">
-      <span class="label mono">06 — Contact</span>
-      <h2>Need a gameplay programmer on your team?</h2>
-      <p>I'm looking for a full-time role in Amsterdam or remote. Drop me a line and I'll gladly walk you through any project, line by line.</p>
-      <a data-email class="btn btn-primary"></a>
-      <div class="social-row mono">
-        <a data-link="linkedin">LinkedIn</a>
-        <a data-link="github">GitHub</a>
-        <a data-link="itch">itch.io</a>
-        <a data-cv>CV</a>
-      </div>
+  <div class="container contact reveal">
+    <span class="idx">06 — Contact</span>
+    <h2>Let's work together.</h2>
+    <p>Looking for a gameplay programmer for your team? I'm happy to walk you through any project.</p>
+    <a data-email class="contact-mail"></a>
+    <div class="socials">
+      <a data-link="linkedin">LinkedIn</a>
+      <a data-link="github">GitHub</a>
+      <a data-link="itch">itch.io</a>
+      <a data-cv>CV</a>
     </div>
   </div>
 </section>
 
 <footer>
-  <div class="container mono">© <span data-year></span> Diego Meleddu · Gameplay Programmer</div>
+  <div class="container"><span>© <span data-year></span> Diego Meleddu</span><span>Gameplay Programmer · Unreal Engine 5</span></div>
 </footer>
 
 <script src="data.js"></script>
 <script src="app.js"></script>
-<script src="asset/extras.js"></script>
 <script>
-  const STATUS_LABEL = { completed: "Completed", progress: "In progress", planned: "Up next" };
-  const num = i => String(i + 1).padStart(2, "0");
+  const STATUS = { completed: "Completed", progress: "In progress", planned: "Next" };
 
-  const cardHTML = (p, i) => `
-    <a class="card paper taped reveal" href="project.html?id=${p.id}">
-      <div class="card-media">${mediaHTML(p)}</div>
-      <div class="card-body">
-        <div class="card-meta mono"><span>No. ${num(i)}</span><span>${p.status}</span></div>
-        <h3>${p.title}</h3>
-        <p class="card-tech mono">${p.engine} · ${p.language}</p>
-        <p>${p.summary}</p>
-        ${tagsHTML(p.tags)}
-        <span class="card-cta">Read the breakdown →</span>
-      </div>
+  const cardHTML = p => `
+    <a class="card reveal" href="project.html?id=${p.id}">
+      <div class="media">${mediaHTML(p)}</div>
+      <div class="card-meta"><span>${p.engine}</span><span>${p.status}</span></div>
+      <h3>${p.title}</h3>
+      <p>${p.summary}</p>
+      ${tagsHTML(p.tags, 3)}
     </a>`;
 
   const wipHTML = p => `
-    <a class="wip-item paper taped reveal" href="project.html?id=${p.id}">
-      <div class="wip-media">${mediaHTML(p)}</div>
+    <a class="wip reveal" href="project.html?id=${p.id}">
+      <div class="media">${mediaHTML(p)}</div>
       <div class="wip-body">
-        <span class="stamp">${p.status}</span>
+        <span class="pill">${p.status}</span>
         <h3>${p.title}</h3>
-        <p class="card-tech mono">${p.engine} · ${p.language}</p>
         <p>${p.summary}</p>
-        ${tagsHTML(p.tags)}
-        <span class="card-cta">See progress →</span>
       </div>
     </a>`;
 
-  const jamHTML = (j, i) => `
-    <a class="jam paper reveal" href="${j.link}" target="_blank" rel="noopener">
-      <div class="jam-media">${mediaHTML(j)}</div>
-      <div class="jam-body">
-        <span class="jam-num mono">#${num(i)} · ${j.event}</span>
-        <h4>${j.title}</h4>
-        <p>${j.summary}</p>
-        <span class="jam-engine mono">${j.engine} · play ↗</span>
-      </div>
+  const jamHTML = j => `
+    <a class="jam" href="${j.link}" target="_blank" rel="noopener">
+      <div class="media">${mediaHTML(j)}</div>
+      <div><h4>${j.title}</h4><p>${j.summary}</p></div>
+      <div class="jam-side">${j.event}<b>Play ↗</b></div>
     </a>`;
 
   document.getElementById("featuredGrid").innerHTML = PROJECTS.filter(p => p.type === "featured").map(cardHTML).join("");
   document.getElementById("wipList").innerHTML = PROJECTS.filter(p => p.type === "wip").map(wipHTML).join("");
-  document.getElementById("jamsGrid").innerHTML = JAMS.map(jamHTML).join("");
+  document.getElementById("jamsList").innerHTML = JAMS.map(jamHTML).join("");
 
-  document.getElementById("skillsGrid").innerHTML = SKILLS.map((s, i) => `
-    <div class="skill-group paper reveal">
-      <span class="skill-tab mono">${num(i)}</span>
+  document.getElementById("skillsGrid").innerHTML = SKILLS.map(s => `
+    <div class="skill">
       <h3>${s.group}</h3>
       <p>${s.text}</p>
-      ${tagsHTML(s.items)}
+      <ul>${s.items.map(i => `<li>${i}</li>`).join("")}</ul>
     </div>`).join("");
 
   document.getElementById("timeline").innerHTML = EXPERIENCE.map(e => `
-    <div class="tl-item">
-      <span class="tl-when mono">${e.when}</span>
-      <h4>${e.title}</h4>
-      <span class="tl-org">${e.org}</span>
-      <p>${e.text}</p>
-    </div>`).join("");
+    <li class="tl">
+      <span class="tl-when">${e.when}</span>
+      <div><h4>${e.title}</h4><span class="tl-org">${e.org}</span><p>${e.text}</p></div>
+    </li>`).join("");
 
-  document.getElementById("coursesGrid").innerHTML = COURSES.map(c => `
-    <div class="course reveal">
-      <span class="pill pill-${c.status} mono">${STATUS_LABEL[c.status]}</span>
-      <h4>${c.title}</h4>
-      <span class="tl-org">${c.provider}</span>
+  document.getElementById("courses").innerHTML = COURSES.map(c => `
+    <div class="course">
+      <div><h4>${c.title}</h4><span>${c.provider}</span></div>
       <p>${c.focus}</p>
+      <span class="status-tag ${c.status}">${STATUS[c.status]}</span>
     </div>`).join("");
 
-  document.getElementById("statShipped").textContent =
-    PROJECTS.filter(p => p.links && p.links.itch).length + JAMS.length;
+  document.getElementById("statProjects").textContent = PROJECTS.filter(p => p.type === "featured").length + JAMS.length;
 
   applySiteLinks();
   initNav();
