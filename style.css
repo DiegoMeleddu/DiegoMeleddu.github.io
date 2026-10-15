@@ -2,15 +2,15 @@
    STYLE.CSS — dark, clean portfolio theme
    ========================================================= */
 :root {
-  --bg: #0b0c0e;
-  --bg-2: #101215;
-  --surface: #15171b;
-  --surface-2: #1b1e23;
-  --line: #24272d;
-  --line-2: #32363e;
+  --bg: #22252a;
+  --bg-2: #212328;
+  --surface: #26292e;
+  --surface-2: #2c2f35;
+  --line: #33363d;
+  --line-2: #42464f;
   --text: #ecebe7;
-  --muted: #a1a5ad;
-  --dim: #6c717a;
+  --muted: #aeb2ba;
+  --dim: #7d828b;
   --accent: #f2a65a;
   --accent-ink: #1a1207;
   --ok: #5fd38d;
@@ -42,7 +42,7 @@ h1, h2, h3, h4 { font-weight: 600; line-height: 1.1; letter-spacing: -.02em; }
 /* ---------- NAV ---------- */
 .nav {
   position: fixed; inset: 0 0 auto; z-index: 100;
-  background: rgba(11, 12, 14, .78);
+  background: rgba(27, 29, 33, .8);
   backdrop-filter: saturate(140%) blur(14px);
   -webkit-backdrop-filter: saturate(140%) blur(14px);
   border-bottom: 1px solid transparent;
@@ -267,7 +267,7 @@ footer .container { display: flex; justify-content: space-between; gap: 16px; fl
   width: 36px; height: 36px; display: grid; place-items: center; border-radius: 50%;
   background: var(--text); color: var(--bg); font-size: .95rem;
 }
-.compare-tag { position: absolute; bottom: 12px; padding: 4px 10px; border-radius: 999px; font-family: var(--mono); font-size: .68rem; background: rgba(11, 12, 14, .75); color: var(--text); pointer-events: none; }
+.compare-tag { position: absolute; bottom: 12px; padding: 4px 10px; border-radius: 999px; font-family: var(--mono); font-size: .68rem; background: rgba(27, 29, 33, .8); color: var(--text); pointer-events: none; }
 .compare-tag.l { left: 12px; }
 .compare-tag.r { right: 12px; }
 .compare-range { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: ew-resize; }

@@ -451,6 +451,81 @@ const PROJECTS = [
     "code": null
   },
   {
+    "id": "ivy-growth",
+    "type": "wip",
+    "title": "Ivy — Growth Puzzle Game",
+    "status": "In development",
+    "event": "",
+    "engine": "Unreal Engine 5.6",
+    "language": "C++ · Blueprints",
+    "role": "Solo Developer — Gameplay Programmer",
+    "team": "Solo",
+    "duration": "Ongoing",
+    "platform": "PC",
+    "summary": "A fixed-camera puzzle game where you guide a climbing ivy to push objects, cast shade and build paths for a ladybug.",
+    "cover": "asset/ivy-growth/poster.jpg",
+    "video": "asset/ivy-growth/growth.mp4",
+    "links": {},
+    "tags": [
+      "UE5",
+      "C++",
+      "Procedural Mesh",
+      "A*",
+      "Puzzle"
+    ],
+    "overview": [
+      "Hold the mouse and the ivy grows toward the cursor, wrapping around corners and edges. The ivy is a data model of nodes: the mesh, leaves, puzzles, undo and the creature are all views on that data, so new features plug in without touching the growth code."
+    ],
+    "pipeline": [
+      {
+        "title": "Ivy data",
+        "text": "A flat array of nodes, grown step by step"
+      },
+      {
+        "title": "GPU animation",
+        "text": "One parameter per frame animates the growth",
+        "highlight": true
+      },
+      {
+        "title": "World reacts",
+        "text": "Puzzles, light and the ladybug listen to events",
+        "highlight": true
+      }
+    ],
+    "built": [
+      "Surface-crawling growth with at most three line traces per step, timer-driven and deterministic for reproducible puzzles.",
+      "Procedural stem and instanced leaves animated in the shader, so the CPU updates one value per frame.",
+      "A ladybug that walks the ivy using a custom A* on the ivy graph, including walls and ceilings where NavMesh can't go.",
+      "Light as a resource, multiple plants with shared sap, global undo and level progression saved to disk."
+    ],
+    "breakdown": [
+      {
+        "title": "Why A* only came later",
+        "text": "The ivy is a tree, so there is only one path between two nodes. Once junctions connect nearby branches the graph gets loops and shortcuts, and A* becomes worth it."
+      },
+      {
+        "title": "A precision bug avoided",
+        "text": "Storing birth time in the mesh UVs would break after a few minutes, because procedural UVs are half precision. Storing the distance along the branch stays small and exact."
+      }
+    ],
+    "challenges": [
+      {
+        "problem": "Undo broke shared objects",
+        "solution": "One global undo stack for every plant and puzzle object, instead of one per plant."
+      },
+      {
+        "problem": "Lit areas were hard to read",
+        "solution": "Light is detected with traces toward tagged lights, and exposure is fixed so lit zones stay readable."
+      }
+    ],
+    "next": [
+      "1–3 golden leaves rating based on leftover sap",
+      "Continuous time rewind using the node data"
+    ],
+    "learned": "Designing gameplay around a single data model, event-driven systems instead of Tick, and taking each technical decision against a concrete alternative.",
+    "note": "Architecture reviewed with an AI assistant acting as a mentor. Implementation, debugging, tuning and level design are my own."
+  },
+  {
     "id": "action-rpg",
     "type": "wip",
     "title": "Third-Person Action RPG",
@@ -482,42 +557,6 @@ const PROJECTS = [
       "Melee combat: weapon equip and attach, attack montages, trace-based hit detection, hit reactions and directional damage.",
       "Enemy AI in C++ with patrol, chase and attack states, using perception and NavMesh movement.",
       "Attribute component for health and stamina, with HUD and health bars in UMG."
-    ],
-    "breakdown": [],
-    "learned": "",
-    "code": null
-  },
-  {
-    "id": "ivy-growth",
-    "type": "wip",
-    "title": "Ivy Growth — Puzzle Mechanic",
-    "status": "Prototype",
-    "event": "",
-    "engine": "Unreal Engine 5",
-    "language": "C++ / Blueprints",
-    "role": "Solo Developer",
-    "team": "Solo",
-    "duration": "Ongoing",
-    "platform": "PC",
-    "summary": "Puzzle mechanic: steer a growing ivy across surfaces.",
-    "cover": "asset/ivy-growth/cover.jpg.jpg",
-    "video": "",
-    "links": {},
-    "note": "Prototype in active development — this page is updated as the mechanic evolves.",
-    "tags": [
-      "UE5",
-      "Procedural",
-      "Splines",
-      "Puzzle Mechanic"
-    ],
-    "overview": [
-      "Instead of a character, the player controls the growth of an ivy: it extends from its tip, climbs walls and wraps around objects."
-    ],
-    "built": [
-      "Player-controlled growth: the ivy extends from its tip in the direction the player steers.",
-      "Surface detection with traces so growth follows walls, floors and ceilings.",
-      "Growth path stored as a spline and rendered procedurally with spline meshes.",
-      "Growth rules and limits (length/energy) that create puzzle constraints."
     ],
     "breakdown": [],
     "learned": "",
